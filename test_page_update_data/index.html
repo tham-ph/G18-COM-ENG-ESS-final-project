@@ -13,7 +13,12 @@
             <h1>H</h1>
             <h1>U</h1>
         </div>
-        <div class="grid-main">
+        <div class="grid-main" id="content-wrapper">
+
+            <div class="proj-status">
+            <h1>Project 1</h1>
+            </div>
+
             <!-- repeat -->
             <div class="grid-proj-item">
                 <div class="project-box">
@@ -33,7 +38,7 @@
                 </div>
             </div>
             <!-- end repeat -->
-            <div class="grid-proj-item">
+            <div class="grid-proj-item" id="add-project-wrapper">
                 <!-- add project btn-->
                 <div class="project-box">
                     <button class="project-btn add-project"> 
@@ -42,15 +47,15 @@
                 </div>
                 <!-- end add project btn-->
             </div>
+            <div class="add-button">
+              <button class="add-task">
+                  <img src="images/add.png" alt="add button" height="70" width="70" />
+              </button>
+            </div>
 
         </div>
     </div>
 
-
-    <!-- dummy btn -->
-    <button class="add-task">
-        <p>bruh</p>
-    </button>
     <!-- pop up -->
     <div class="popup">
         <div class="main">
@@ -119,30 +124,9 @@
         </div>
       </div>
 
-      <!-- firebase -->
-      <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-          apiKey: "AIzaSyDMAxyWCxAI-XfH_KbrOoLv5P_mvFimQSg",
-          authDomain: "g18-essen-final.firebaseapp.com",
-          projectId: "g18-essen-final",
-          storageBucket: "g18-essen-final.appspot.com",
-          messagingSenderId: "798773782854",
-          appId: "1:798773782854:web:23ca69b16910048fa9dd47"
-        };
-      
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-      </script>
-
     <!-- main script -->
-      <script src="script.js"></script>
-      <script type="module" src="page_data_script.js"></script>
+    <script type="module" src="page_data_script.js"></script>
+    <script src="script.js"></script>
     <!-- end pop up -->
 
 </body>

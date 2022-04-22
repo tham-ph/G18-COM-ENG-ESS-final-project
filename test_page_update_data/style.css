@@ -81,6 +81,7 @@ body {
   padding: 16px;
   border-radius: 20px;
   margin: auto;
+  overflow-wrap: break-word;
 }
 .progress {
   width: 90%;
