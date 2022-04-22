@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Test-Task</title>
+</head>
+<body>
+    
+    <div class="containner">
+        <div class="menu">
+            <h1><a href="index.html">H</a></h1>
+            <h1>U</h1>
+        </div>
+        <div class="grid-task">
+
+            <div class="proj-status">
+                <h1>Project 1</h1>
+            </div>
+
+            <!-- repeat task -->
+            <!-- <div class="grid-task-item">
+                <div class="task-name-box">
+                    <p>Task 1 </p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, possimus. Recusandae soluta magni, debitis dolores accusamus quam tenetur non totam? In nesciunt voluptatum quae eaque commodi maiores error quidem voluptates?</p>
+                </div>
+                <div class="task-status-box">
+                    <p>Status </p>
+                </div>
+                <div class="task-menu-box">
+                    <p>Menu </p>
+                </div>
+            </div> -->
+            <!-- repeat -->
+
+            <!-- <div class="grid-task-item">
+                <div class="task-name-box">
+                    <p>Task 2 </p>
+                </div>
+                <div class="task-status-box">
+                    <p>Status </p>
+                </div>
+                <div class="task-menu-box">
+                    <p>Menu </p>
+                </div>
+            </div>
+
+            <div class="grid-task-item">
+                <div class="task-name-box">
+                    <p>Task 3 </p>
+                </div>
+                <div class="task-status-box">
+                    <p>Status </p>
+                </div>
+                <div class="task-menu-box">
+                    <p>Menu </p>
+                </div>
+            </div>
+
+            <div class="grid-task-item">
+                <div class="task-name-box">
+                    <p>Task 4 </p>
+                </div>
+                <div class="task-status-box">
+                    <p>Status </p>
+                </div>
+                <div class="task-menu-box">
+                    <p>Menu </p>
+                </div>
+            </div> -->
+            <!-- task repeat-->
+            <div class="box">
+                <div class="flex-container">
+                  <div class="taskheader"><div class="task-name">Task1</div></div>
+      
+                  <div class="right-button">
+                    <button class="edit">
+                      <img src="images/edit.png" height="16" width="16" alt="edit button" />
+                    </button>
+      
+                    <button class="delete">
+                      <img src="images/delete.png" height="18" width="18" alt="delete" />
+                    </button>
+                  </div>
+                </div>
+                <div class="flex-container">
+                  <div class="task-description">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
+                    dolore, dolorum magnam tratione debitis aliquam!
+                  </div>
+      
+                  <div>
+                    <select id="status">
+                      <option selected="todo">todo</option>
+                      <option value="doing">doing</option>
+                      <option value="done">done</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            <!-- end task repeat-->
+            <div class="add-button">
+                <button class="add-task">
+                    <img src="images/add.png" alt="add button" height="70" width="70" />
+                </button>
+              </div>
+        </div>
+    </div>
+
+    <!-- dummy btn -->
+    <button class="add-project">
+        <p>bruh</p>
+    </button>
+    <div class="popup">
+        <div class="main">
+    
+          <form>
+            <label class="name">Name</label>
+            <input type="text" name="name" class="name">
+            <label class="description">Description</label>
+            <textarea name="description" class="description" rows="4"></textarea>
+          </form>
+    
+          <div class="button-container">
+            <button class="success-button">OK</button>
+            <button class="secondary-button">Cancel</button>
+          </div>
+    
+        </div>
+      </div>
+    
+      <div class="popup" id="username" style="display: none">
+        <div class="main">
+          <h1>Create Your Username</h1>
+          <form>
+            <label class="name">Username</label>
+            <input type="text" name="name" class="name">
+          </form>
+    
+          <div class="button-container" style="justify-content: center;">
+            <button class="success-button">Create</button>
+          </div>
+    
+        </div>
+      </div>
+    
+      <div class="popup" id="project">
+        <div class="main">
+          <form>
+            <label class="name">Project Name</label>
+            <input type="text" name="name" class="name">
+            <label class="description">Description</label>
+            <textarea name="description" class="description" rows="4"></textarea>
+          </form>
+    
+          <div class="button-container">
+            <button class="success-button">OK</button>
+            <button class="secondary-button">Cancel</button>
+          </div>
+    
+        </div>
+      </div>
+
+      <div class="popup" id="task">
+        <div class="main">
+          <form>
+            <label class="name">Task Name</label>
+            <input type="text" name="name" class="name">
+            <label class="description">Description</label>
+            <textarea name="description" class="description" rows="4"></textarea>
+          </form>
+    
+          <div class="button-container">
+            <button class="success-button">OK</button>
+            <button class="secondary-button">Cancel</button>
+          </div>
+    
+        </div>
+      </div>
+    <script src="script.js"></script>
+</body>
+</html>
