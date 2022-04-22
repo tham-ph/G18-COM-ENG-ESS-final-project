@@ -1,0 +1,108 @@
+@import url("https://fonts.googleapis.com/css2?family=Mitr:wght@200;400;600&display=swap");
+.box{
+    width: 90%;
+    max-width: 850px;
+    height: fit-content;
+    background-color: pink;
+    border: 1px solid pink;
+    margin-top: 13px;
+    margin-left: 20px;
+    padding-top: 10px;
+    padding-left: 8px;
+    padding-right: 10px;
+    border-radius: 10px;
+}
+h2{
+    font-size: medium;
+    font-weight: 400;
+    margin: 20px;
+
+}
+h1{
+    margin: 20px;
+    font-size: larger;
+}
+
+body {
+    font-family: "Mitr", sans-serif;
+}
+.taskheader{
+    font-size: large;
+    background-color: aliceblue;
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 80%;
+    
+    text-align: left;
+    /* position: relative; */
+
+}
+.task-description{
+    margin-right: 5%;
+    margin-top: 5px;
+    font-size: small;
+    color: darkslategrey;
+}
+#status{
+    font-size: medium;
+    font-family: "Mitr","sans-serif";
+    width: 150px;
+    border-radius: 9px;
+    align-content: flex-end;
+    margin-top: 10px;
+    margin-right: 5%;
+}
+.flex-container{
+    display: flex;
+    
+    text-align: left;
+    }
+.edit,.delete{
+    width: 30px;
+    height: 30px;
+   
+    margin: 5px;
+    
+    font-family: "Mitr","sans-serif";
+    font-size: medium;
+    border-color: palevioletred;
+    border-radius: 10px;
+    padding: 1.5px;
+    align-content: center;
+  
+    position: relative;
+    /* position: absolute; */
+    
+}
+.right-button{
+    margin-left: 30px;
+    position: relative;
+}
+.edit :hover{
+    border-color: pink;
+    
+  
+}
+.delete :hover{
+    border-color:red;
+    
+   
+}
+.add-button{
+    margin: 20px;
+    text-align: center;
+    align-self: center;
+    color: pink;
+}
+.add-button:hover{
+    border-color: palevioletred;
+}
+.content{
+    width: 98%;
+    max-width: 850px;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+}
+
