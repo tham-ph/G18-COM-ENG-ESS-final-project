@@ -51,29 +51,32 @@ async function showProjectGrid() {
     let proj_item = document.createElement('div');
     proj_item.className = 'grid-proj-item';
     proj_item.innerHTML = `
-    <div class="project-box">
-      <h3 style="overflow-wrap: break-word;">${proj.name}</h3>
-      <p>Description: ${proj.description}</p>
-      <br>
-      <br>
-      <br>
-      <p>Status:</p>
-      <div class="progress">
-        <div class="progress-done"></div>
+    <div class="project-box" id="${proj.id}">
+      <div class="btn-to-project">
+        <h3 style="overflow-wrap: break-word;">${proj.name}</h3>
+        <p>Description: ${proj.description}</p>
+        <br>
+        <br>
+        <br>
+        <p id="${proj.id}-staus-text">Status: 0%</p>
+        <div class="progress">
+          <div class="progress-done" style="width:0%" id="${proj.id}-progress"></div>
+        </div>
+        <br>
+        <button class="edit-project-btn">
+          <p>edit</p>
+        </button>
       </div>
-      <br>
-      <button class="edit-project-btn">
-        <p>edit</p>
-      </button>
     </div>`;
     console.log(proj.name);
     content_wrapper.insertBefore(proj_item, content_wrapper.children[0]);
+    updateProjectPercent(proj.taskList, proj.id);
   })
-  // deleteBtnEvent();
+  projectBtnEvent();
   // countTotal();
 }
 
-async function showTaskGrid() {
+async function showTaskGrid(project_id) {
   const content_wrapper = document.getElementById('content-wrapper');
   if (content_wrapper.classList.contains('grid-main')){
     content_wrapper.className = 'grid-task';
@@ -83,6 +86,72 @@ async function showTaskGrid() {
     document.querySelectorAll('#add-project-wrapper')[0].style.display = "none"
   }else{
     clearTaskItem()
+  }
+
+  const projRef = doc(db, `projects/${project_id}`);
+  const proj = await getDoc(projRef);
+  const tasks = proj.data().taskList;
+  
+  tasks.map(async(task) => {
+    const taskRef = doc(db, `tasks/${task}`);
+    const taskDoc = await getDoc(taskRef);
+    const t = taskDoc.data()
+    let t_item = document.createElement('div');
+    t_item.className = 'grid-task-item';
+    t_item.innerHTML = `
+    <div class="task-name-box">
+      <div class="taskheader"><div class="${t.name}">Task1</div></div>
+      <div class="task-description">
+        ${t.description}
+      </div>
+    </div>
+    <div class="task-status-box">
+      <div>
+        <select id="status">
+          <option selected="todo">todo</option>
+          <option value="doing">doing</option>
+          <option value="done">done</option>
+        </select>
+      </div>
+    </div>
+    <div class="task-menu-box">
+      <button class="edit">
+        <img src="images/edit.png" height="16" width="16" alt="edit button" />
+      </button>
+      <button class="delete">
+        <img src="images/delete.png" height="18" width="18" alt="delete" />
+      </button>
+    </div>`;
+    console.log(t.name);
+    content_wrapper.insertBefore(t_item, content_wrapper.children[1]);
+    document.getElementsByClassName("proj-task-status-txt")[0].id = project_id+"-staus-text";
+    document.getElementsByClassName("proj-task-status-bar")[0].id = project_id+"-progress";
+    updateProjectPercent(tasks, project_id);
+  });
+
+}
+
+async function updateProjectPercent(taskList, proj_id){
+  let all_task = taskList.length;
+  if (all_task == 0) {return 0}
+  var done_task = 0;
+  const promises = await taskList.map(async(task) => {
+    const taskRef = doc(db, `tasks/${task}`);
+    const taskDoc = await getDoc(taskRef);
+    if(taskDoc.data().status == "done"){
+        done_task += 1;
+      }
+  })
+  await Promise.all(promises);
+  done_task = parseInt(100*done_task/ all_task);
+  console.log(done_task);
+  const bar = document.getElementById(proj_id+"-progress");
+  const txt = document.getElementById(proj_id+"-staus-text");
+  if(bar){
+    bar.style.width = done_task + "%";
+  }
+  if(txt){
+    txt.innerText = "Status : " + done_task + '%' ;
   }
 }
 
@@ -114,6 +183,20 @@ function clearProjectItem(){
   });
 }
 
+function projectBtnEvent() {
+  const projBtns = document.getElementsByClassName('btn-to-project');
+  for (let i = 0; i < projBtns.length; i++) {
+    const project_id = projBtns.item(i).parentElement.id;
+    //console.log(idTodelete);
+    projBtns.item(i).addEventListener('click', (e) => {
+      e.stopPropagation();
+      document.addEventListener('click', showTaskGrid(project_id));
+    });
+  }
+}
+
 initialShow();
 
 showProjectGrid();
+
+// showTaskGrid("UqYEPEXE5NQymjFwAeiX");

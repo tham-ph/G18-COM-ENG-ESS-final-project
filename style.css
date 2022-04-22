@@ -83,12 +83,12 @@ body {
   margin: auto;
 }
 .progress {
-  width: 90%;
+  width: 100%;
   background-color: #ddd;
 }
 
 .progress-done {
-  width: 70%;
+  width: 0%;
   height: 15px;
   background-color: #e4ee56;
   text-align: center;
@@ -301,6 +301,10 @@ body {
   }
   .grid-task {
     width: 100%;
+  }
+  .progress {
+    width: 98%;
+    margin: auto;
   }
 }
 
