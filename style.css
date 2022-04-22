@@ -67,49 +67,6 @@ body {
   height: 100px;
 }
 
-/* *******************Media Query*********************** */
-@media (max-width: 1080px) {
-  .grid-main {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .grid-task {
-    width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .grid-main {
-    grid-template-columns: 1fr;
-  }
-  .menu {
-    width: 100%;
-  }
-  .containner {
-    display: block;
-  }
-  .proj-box {
-    width: 80%;
-  }
-  .grid-task-item {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .task-name-box {
-    grid-column: 1/3;
-  }
-  .task-status-box {
-    grid-column: 1/2;
-  }
-  .task-menu-box {
-    grid-column: 2/3;
-  }
-  .right-button {
-    width: 100%;
-  }
-  .project-box {
-      width: 100%;
-  }
-}
-
 /*  from project_box css */
 .project-box {
   width: 300px;
@@ -329,4 +286,47 @@ body {
   align-content: center;
   align-items: center;
   text-align: center;
+}
+
+/* *******************Media Query*********************** */
+@media (max-width: 1080px) {
+  .grid-main {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-task {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-main {
+    grid-template-columns: 1fr;
+  }
+  .menu {
+    width: 100%;
+  }
+  .containner {
+    display: block;
+  }
+  .proj-box {
+    width: 80%;
+  }
+  .grid-task-item {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .task-name-box {
+    grid-column: 1/3;
+  }
+  .task-status-box {
+    grid-column: 1/2;
+  }
+  .task-menu-box {
+    grid-column: 2/3;
+  }
+  .right-button {
+    width: 100%;
+  }
+  .project-box {
+      width: 80%;
+  }
 }
