@@ -52,9 +52,15 @@ body {
 }
 .grid-task-item {
   display: grid;
-  grid-template-columns: 3fr 1fr 1fr;
+  grid-template-columns: 6fr 1fr 1fr;
+  background-color: pink;
+  border: 1px solid #ffc0cb;
+  padding-top: 10px;
+  padding-left: 8px;
+  padding-right: 10px;
+  border-radius: 10px;
 }
-.task-name-box {
+/* .task-name-box {
   background: white;
 }
 .task-status-box {
@@ -62,7 +68,7 @@ body {
 }
 .task-menu-box {
   background: white;
-}
+} */
 .proj-status {
   height: 100px;
 }
@@ -327,6 +333,9 @@ body {
     width: 100%;
   }
   .project-box {
-      width: 80%;
+    width: 80%;
+  }
+  .task-menu-box{
+    justify-self: end;
   }
 }
