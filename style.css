@@ -1,11 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Mitr:wght@200;400;600&display=swap");
 :root{
-    --main-color:#ff6f00;
+    --main-color:#FF5C8D;
+    --second-color: #524A4E;
+    --background-color: white;
+    --font-color: white;
 }
 
 body {
   margin: 0px;
-  padding-top: 10px;
+  /* padding-top: 10px; */
 }
 .containner {
   display: flex;
@@ -101,6 +104,9 @@ body {
   }
   .right-button {
     width: 100%;
+  }
+  .project-box {
+      width: 100%;
   }
 }
 
@@ -228,7 +234,7 @@ textarea {
   /* max-width: 850px; */
   height: fit-content;
   background-color: pink;
-  border: 1px solid pink;
+  border: 1px solid #ffc0cb;
   margin-top: 13px;
   margin-left: 20px;
   padding-top: 10px;
@@ -290,7 +296,7 @@ body {
 
   font-family: "Mitr", "sans-serif";
   font-size: medium;
-  border-color: palevioletred;
+  border-color: #d87093;
   border-radius: 10px;
   padding: 1.5px;
   align-content: center;
