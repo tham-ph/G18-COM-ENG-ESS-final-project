@@ -100,7 +100,7 @@ async function showTaskGrid(project_id) {
     t_item.className = 'grid-task-item';
     t_item.innerHTML = `
     <div class="task-name-box">
-      <div class="taskheader"><div class="${t.name}">Task1</div></div>
+      <div class="taskheader"><div class="task-name">${t.name}</div></div>
       <div class="task-description">
         ${t.description}
       </div>
@@ -124,8 +124,13 @@ async function showTaskGrid(project_id) {
     </div>`;
     console.log(t.name);
     content_wrapper.insertBefore(t_item, content_wrapper.children[1]);
-    document.getElementsByClassName("proj-task-status-txt")[0].id = project_id+"-staus-text";
-    document.getElementsByClassName("proj-task-status-bar")[0].id = project_id+"-progress";
+    document.getElementsByClassName("proj-name-task")[0].innerText = proj.data().name;
+    const proj_task_status_txt = document.getElementsByClassName("proj-task-status-txt")[0];
+    const proj_task_status_bar = document.getElementsByClassName("proj-task-status-bar")[0];
+    proj_task_status_txt.id = project_id+"-staus-text";
+    proj_task_status_bar.id = project_id+"-progress";
+    proj_task_status_txt.innerText = "Status :"
+    proj_task_status_bar.style.width = "0px";
     updateProjectPercent(tasks, project_id);
   });
 
@@ -159,11 +164,12 @@ async function updateProjectPercent(taskList, proj_id){
 function initialShow(){
   const content_wrapper = document.getElementById('content-wrapper');
   content_wrapper.className = 'grid-main';
-    clearTaskItem()
-    clearProjectItem()
-    document.querySelectorAll('.proj-status')[0].style.display = "none";
-    document.querySelectorAll('.add-button')[0].style.display = "none";
-    document.querySelectorAll('#add-project-wrapper')[0].style.display = "initial";
+  clearTaskItem()
+  clearProjectItem()
+  document.querySelectorAll('.proj-status')[0].style.display = "none";
+  document.querySelectorAll('.add-button')[0].style.display = "none";
+  document.querySelectorAll('#add-project-wrapper')[0].style.display = "initial";
+  homeBtnEvent()
 }
 
 
@@ -193,6 +199,14 @@ function projectBtnEvent() {
       document.addEventListener('click', showTaskGrid(project_id));
     });
   }
+}
+
+function homeBtnEvent() {
+  const homeBtns = document.getElementsByClassName('home-btn')[0];
+  homeBtns.addEventListener('click', (e) => {
+    e.stopPropagation();
+    document.addEventListener('click', showProjectGrid());
+  });
 }
 
 initialShow();

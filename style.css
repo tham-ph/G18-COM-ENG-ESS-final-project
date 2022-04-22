@@ -21,6 +21,21 @@ body {
   color: white;
 }
 
+.home-btn {
+  background-color: var(--main-color);
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+  cursor: pointer;
+}
+
+.btn-to-project{
+  cursor: pointer;
+}
+
+
 /* *******************Project Grid*********************** */
 .grid-main {
   display: grid;
@@ -75,7 +90,7 @@ body {
 
 /*  from project_box css */
 .project-box {
-  width: 300px;
+  width: 75%;
   min-height: 250px;
   background-color: rgb(229, 134, 182);
   padding: 16px;
@@ -337,7 +352,7 @@ body {
     width: 100%;
   }
   .project-box {
-    width: 80%;
+    width: 90%;
   }
   .task-menu-box{
     justify-self: end;
