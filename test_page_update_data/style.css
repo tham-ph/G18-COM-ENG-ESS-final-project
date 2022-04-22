@@ -317,6 +317,7 @@ body {
   }
   .proj-box {
     width: 80%;
+    margin: 0px;
   }
   .grid-task-item {
     grid-template-columns: repeat(2, 1fr);
