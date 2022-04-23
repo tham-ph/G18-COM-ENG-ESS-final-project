@@ -117,6 +117,10 @@ img{
   border-radius: 100%;
 }
 
+.main-content{
+  flex-grow: 1;
+}
+
 /* *******************Project Grid*********************** */
 .grid-main {
   display: grid;
@@ -125,6 +129,7 @@ img{
   grid-gap: 13px;
   row-gap: 50px;
   flex-grow: 1;
+  margin-bottom: 50px;
 }
 /* .grid-proj-item {
   background: white;
@@ -141,6 +146,12 @@ img{
   min-height: 100px;
 }
 
+.label-proj{
+  font-size: 20px;
+  margin-bottom: 30px;
+  padding-left: 50px;
+  font-weight: bold;
+}
 /* *******************Task Grid*********************** */
 .grid-task {
   display: grid;
@@ -423,6 +434,9 @@ h1 {
   .progress {
     width: 98%;
     margin: auto;
+  }
+  .label-proj{
+    text-align: center;
   }
 }
 

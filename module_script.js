@@ -31,12 +31,15 @@ const projectRef = collection(db, 'projects');
 
 async function showProjectGrid() {
   const content_wrapper = document.getElementById('content-wrapper');
+  const second_wrapper = document.getElementById('second-wrapper');
   if (content_wrapper.classList.contains('grid-task')){
     content_wrapper.className = 'grid-main';
     clearTaskItem()
     document.querySelectorAll('.proj-status')[0].style.display = "none";
     document.querySelectorAll('.add-button')[0].style.display = "none";
     document.querySelectorAll('#add-project-wrapper')[0].style.display = "initial";
+    second_wrapper.style.display = "grid";
+    toggleProjectLabel(true);
   }else{
     clearProjectItem()
   }
@@ -68,7 +71,7 @@ async function showProjectGrid() {
       </div>
     </div>`;
     // console.log(proj.name);
-    content_wrapper.insertBefore(proj_item, content_wrapper.children[0]);
+    second_wrapper.insertBefore(proj_item, second_wrapper.children[0]);
     updateProjectPercent(proj.taskList, proj.id);
   })
   projectBtnEvent();
@@ -82,7 +85,9 @@ async function showTaskGrid(project_id) {
     clearProjectItem()
     document.querySelectorAll('.proj-status')[0].style.display = "initial";
     document.querySelectorAll('.add-button')[0].style.display = "initial";
-    document.querySelectorAll('#add-project-wrapper')[0].style.display = "none"
+    document.querySelectorAll('#add-project-wrapper')[0].style.display = "none";
+    document.querySelectorAll('#second-wrapper')[0].style.display = "none";
+    toggleProjectLabel(false);
   }else{
     clearTaskItem()
   }
@@ -130,11 +135,11 @@ async function showTaskGrid(project_id) {
   document.getElementById("proj-desc-task").innerText = "Description : " + proj.data().description;
   const proj_task_status_txt = document.getElementsByClassName("proj-task-status-txt")[0];
   const proj_task_status_bar = document.getElementsByClassName("proj-task-status-bar")[0];
-  proj_task_status_txt.id = project_id+"-staus-text";
-  proj_task_status_bar.id = project_id+"-progress";
+  proj_task_status_txt.id = project_id+"-t-staus-text";
+  proj_task_status_bar.id = project_id+"-t-progress";
   proj_task_status_txt.innerText = "Status : 0%"
   proj_task_status_bar.style.width = "0px";
-  updateProjectPercent(tasks, project_id);
+  updateProjectPercent(tasks, project_id + '-t');
 }
 
 async function updateProjectPercent(taskList, proj_id){
@@ -207,6 +212,17 @@ function homeBtnEvent() {
     e.stopPropagation();
     document.addEventListener('click', showProjectGrid());
   });
+}
+
+function toggleProjectLabel(isShow){
+  const proj_labels = document.getElementsByClassName("label-proj");
+  if(isShow){
+    proj_labels[0].style.display = "block";
+    proj_labels[1].style.display = "block";
+    return;
+  }
+  proj_labels[0].style.display = "none";
+  proj_labels[1].style.display = "none";
 }
 
 initialShow();
