@@ -68,7 +68,7 @@ async function showProjectGrid() {
         </button>
       </div>
     </div>`;
-    console.log(proj.name);
+    // console.log(proj.name);
     content_wrapper.insertBefore(proj_item, content_wrapper.children[0]);
     updateProjectPercent(proj.taskList, proj.id);
   })
@@ -95,6 +95,7 @@ async function showTaskGrid(project_id) {
   tasks.map(async(task) => {
     const taskRef = doc(db, `tasks/${task}`);
     const taskDoc = await getDoc(taskRef);
+    if (!taskDoc.exists()){return}
     const t = taskDoc.data()
     let t_item = document.createElement('div');
     t_item.className = 'grid-task-item';
@@ -122,7 +123,7 @@ async function showTaskGrid(project_id) {
         <img src="images/delete.png" height="18" width="18" alt="delete" />
       </button>
     </div>`;
-    console.log(t.name);
+    // console.log(t.name);
     content_wrapper.insertBefore(t_item, content_wrapper.children[1]);
     document.getElementsByClassName("proj-name-task")[0].innerText = proj.data().name;
     const proj_task_status_txt = document.getElementsByClassName("proj-task-status-txt")[0];
@@ -143,13 +144,13 @@ async function updateProjectPercent(taskList, proj_id){
   const promises = await taskList.map(async(task) => {
     const taskRef = doc(db, `tasks/${task}`);
     const taskDoc = await getDoc(taskRef);
-    if(taskDoc.data().status == "done"){
+    if(taskDoc.exists() && taskDoc.data().status == "done"){
         done_task += 1;
       }
   })
   await Promise.all(promises);
   done_task = parseInt(100*done_task/ all_task);
-  console.log(done_task);
+  // console.log(done_task);
   const bar = document.getElementById(proj_id+"-progress");
   const txt = document.getElementById(proj_id+"-staus-text");
   if(bar){
