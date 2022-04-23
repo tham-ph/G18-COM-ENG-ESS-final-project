@@ -51,11 +51,11 @@ async function showProjectGrid() {
     let proj_item = document.createElement('div');
     proj_item.className = 'grid-proj-item';
     proj_item.innerHTML = `
-    <div class="project-box" id="${proj.id}">
+    <div class="project-box drop-shadow" id="${proj.id}">
       <div class="btn-to-project">
         <h3 style="overflow-wrap: break-word;">${proj.name}</h3>
         <div class="proj-des-box">
-        <p>Description: ${proj.description}</p>
+        <p>Description : ${proj.description}</p>
         </div>
         <p id="${proj.id}-staus-text">Status: 0%</p>
         <div class="progress">
@@ -97,7 +97,7 @@ async function showTaskGrid(project_id) {
     if (taskDoc.exists()){
       const t = taskDoc.data()
       let t_item = document.createElement('div');
-      t_item.className = 'grid-task-item';
+      t_item.className = 'grid-task-item drop-shadow';
       t_item.innerHTML = `
       <div class="task-name-box">
         <div class="taskheader"><div class="task-name">${t.name}</div></div>
@@ -126,7 +126,8 @@ async function showTaskGrid(project_id) {
       content_wrapper.insertBefore(t_item, content_wrapper.children[1]);
     }
   });
-  document.getElementsByClassName("proj-name-task")[0].innerText = proj.data().name;
+  document.getElementById("proj-name-task").innerText = proj.data().name;
+  document.getElementById("proj-desc-task").innerText = "Description : " + proj.data().description;
   const proj_task_status_txt = document.getElementsByClassName("proj-task-status-txt")[0];
   const proj_task_status_bar = document.getElementsByClassName("proj-task-status-bar")[0];
   proj_task_status_txt.id = project_id+"-staus-text";
