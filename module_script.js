@@ -95,46 +95,46 @@ async function showTaskGrid(project_id) {
   tasks.map(async(task) => {
     const taskRef = doc(db, `tasks/${task}`);
     const taskDoc = await getDoc(taskRef);
-    if (!taskDoc.exists()){return}
-    const t = taskDoc.data()
-    let t_item = document.createElement('div');
-    t_item.className = 'grid-task-item';
-    t_item.innerHTML = `
-    <div class="task-name-box">
-      <div class="taskheader"><div class="task-name">${t.name}</div></div>
-      <div class="task-description">
-        ${t.description}
+    if (taskDoc.exists()){
+      const t = taskDoc.data()
+      let t_item = document.createElement('div');
+      t_item.className = 'grid-task-item';
+      t_item.innerHTML = `
+      <div class="task-name-box">
+        <div class="taskheader"><div class="task-name">${t.name}</div></div>
+        <div class="task-description">
+          ${t.description}
+        </div>
       </div>
-    </div>
-    <div class="task-status-box">
-      <div>
-        <select id="status">
-          <option selected="todo">todo</option>
-          <option value="doing">doing</option>
-          <option value="done">done</option>
-        </select>
+      <div class="task-status-box">
+        <div>
+          <select id="status">
+            <option selected="todo">todo</option>
+            <option value="doing">doing</option>
+            <option value="done">done</option>
+          </select>
+        </div>
       </div>
-    </div>
-    <div class="task-menu-box">
-      <button class="edit">
-        <img src="images/edit.png" height="16" width="16" alt="edit button" />
-      </button>
-      <button class="delete">
-        <img src="images/delete.png" height="18" width="18" alt="delete" />
-      </button>
-    </div>`;
+      <div class="task-menu-box">
+        <button class="edit">
+          <img src="images/edit.png" height="16" width="16" alt="edit button" />
+        </button>
+        <button class="delete">
+          <img src="images/delete.png" height="18" width="18" alt="delete" />
+        </button>
+      </div>`;
     // console.log(t.name);
-    content_wrapper.insertBefore(t_item, content_wrapper.children[1]);
-    document.getElementsByClassName("proj-name-task")[0].innerText = proj.data().name;
-    const proj_task_status_txt = document.getElementsByClassName("proj-task-status-txt")[0];
-    const proj_task_status_bar = document.getElementsByClassName("proj-task-status-bar")[0];
-    proj_task_status_txt.id = project_id+"-staus-text";
-    proj_task_status_bar.id = project_id+"-progress";
-    proj_task_status_txt.innerText = "Status :"
-    proj_task_status_bar.style.width = "0px";
-    updateProjectPercent(tasks, project_id);
+      content_wrapper.insertBefore(t_item, content_wrapper.children[1]);
+    }
   });
-
+  document.getElementsByClassName("proj-name-task")[0].innerText = proj.data().name;
+  const proj_task_status_txt = document.getElementsByClassName("proj-task-status-txt")[0];
+  const proj_task_status_bar = document.getElementsByClassName("proj-task-status-bar")[0];
+  proj_task_status_txt.id = project_id+"-staus-text";
+  proj_task_status_bar.id = project_id+"-progress";
+  proj_task_status_txt.innerText = "Status : 0%"
+  proj_task_status_bar.style.width = "0px";
+  updateProjectPercent(tasks, project_id);
 }
 
 async function updateProjectPercent(taskList, proj_id){
