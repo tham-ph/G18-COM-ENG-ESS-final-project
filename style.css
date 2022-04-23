@@ -60,7 +60,7 @@ header{
   font-family: var(--font-family);
   color: var(--font-color);
   font-size: 16px;
-  width: 100%;
+  width: 80px;
   height: 80px;
   cursor: pointer;
   border-radius: 100%;
@@ -490,5 +490,6 @@ h1 {
     margin-bottom: 5px;
     margin-top: 0px;
     height: 50px;
+    width: 100%;
   }
 }
