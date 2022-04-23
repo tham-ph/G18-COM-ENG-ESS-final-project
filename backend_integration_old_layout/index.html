@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Test-Project</title>
+</head>
+<body>
+<div class="containner">
+  <div class="menu">
+    <h1>H</h1>
+    <h1>U</h1>
+  </div>
+  <div class="grid-main">
+    <!-- repeat -->
+    <div class="grid-proj-item template" style="display:none">
+      <div class="project-box">
+        <h3 class="name">Project 1</h3>
+        <p class="description">Description:</p>
+        <br>
+        <br>
+        <br>
+        <p>Status:</p>
+        <div class="progress">
+          <div class="progress-done"></div>
+        </div>
+        <br>
+        <button class="edit-project-btn">
+          <p>edit</p>
+        </button>
+        <button class="delete-project-btn">
+          <p>delete</p>
+        </button>
+      </div>
+    </div>
+    <!-- end repeat -->
+    <div class="grid-proj-item">
+      <!-- add project btn-->
+      <div class="project-box">
+        <button class="project-btn add-project">
+          <!-- <img src="images/add.png" alt="add project" style="width: 250px;"> -->
+        </button>
+      </div>
+      <!-- end add project btn-->
+    </div>
+
+  </div>
+</div>
+
+<div class="popup template">
+  <div class="main">
+
+    <form>
+      <label class="name">Name</label>
+      <input type="text" name="name" class="name">
+      <label class="description">Description</label>
+      <textarea name="description" class="description" rows="4"></textarea>
+    </form>
+
+    <div class="button-container">
+      <button class="success-button">OK</button>
+      <button class="secondary-button">Cancel</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="add-user popup" style="display:none">
+  <div class="main">
+    <h1 style="font-size: 36px">Create Your Username Or Login By Your Username</h1>
+    <form>
+      <input style type="text" name="name" class="name">
+    </form>
+
+    <div class="button-container" style="justify-content: center;">
+      <button class="success-button">Create/Login</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="add-project popup">
+  <div class="main">
+    <form>
+      <label class="name">Project Name</label>
+      <input type="text" name="name" class="name">
+      <label class="description">Description</label>
+      <textarea name="description" class="description" rows="4"></textarea>
+    </form>
+
+    <div class="button-container">
+      <button class="success-button">Add</button>
+      <button class="secondary-button">Cancel</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="edit-project popup">
+  <div class="main">
+    <form>
+      <label class="name">Project Name</label>
+      <input type="text" name="name" class="name">
+      <label class="description">Description</label>
+      <textarea name="description" class="description" rows="4"></textarea>
+    </form>
+
+    <div class="button-container">
+      <button class="success-button">Edit</button>
+      <button class="secondary-button">Cancel</button>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- firebase
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDMAxyWCxAI-XfH_KbrOoLv5P_mvFimQSg",
+    authDomain: "g18-essen-final.firebaseapp.com",
+    projectId: "g18-essen-final",
+    storageBucket: "g18-essen-final.appspot.com",
+    messagingSenderId: "798773782854",
+    appId: "1:798773782854:web:23ca69b16910048fa9dd47"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
+-->
+<!-- main script -->
+<script type="module" src="script.js"></script>
+<!-- end pop up -->
+
+</body>
+</html>

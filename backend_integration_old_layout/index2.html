@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Test-Task</title>
+</head>
+<body>
+
+<div class="containner">
+  <div class="menu">
+    <h1><a href="index.html">H</a></h1>
+    <h1>U</h1>
+  </div>
+  <div class="grid-task">
+
+    <div class="proj-status">
+      <h1>Project 1</h1>
+    </div>
+
+    <!-- repeat task -->
+    <!-- <div class="grid-task-item">
+        <div class="task-name-box">
+            <p>Task 1 </p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, possimus. Recusandae soluta magni, debitis dolores accusamus quam tenetur non totam? In nesciunt voluptatum quae eaque commodi maiores error quidem voluptates?</p>
+        </div>
+        <div class="task-status-box">
+            <p>Status </p>
+        </div>
+        <div class="task-menu-box">
+            <p>Menu </p>
+        </div>
+    </div> -->
+    <!-- repeat -->
+
+    <!-- <div class="grid-task-item">
+        <div class="task-name-box">
+            <p>Task 2 </p>
+        </div>
+        <div class="task-status-box">
+            <p>Status </p>
+        </div>
+        <div class="task-menu-box">
+            <p>Menu </p>
+        </div>
+    </div>
+
+    <div class="grid-task-item">
+        <div class="task-name-box">
+            <p>Task 3 </p>
+        </div>
+        <div class="task-status-box">
+            <p>Status </p>
+        </div>
+        <div class="task-menu-box">
+            <p>Menu </p>
+        </div>
+    </div>
+
+    <div class="grid-task-item">
+        <div class="task-name-box">
+            <p>Task 4 </p>
+        </div>
+        <div class="task-status-box">
+            <p>Status </p>
+        </div>
+        <div class="task-menu-box">
+            <p>Menu </p>
+        </div>
+    </div> -->
+    <!-- task repeat-->
+    <div class="box template" style="display: none">
+      <div class="flex-container">
+        <div class="taskheader">
+          <div class="name">Task1</div>
+        </div>
+
+        <div class="right-button">
+          <button class="edit-task-btn">
+            <img src="images/edit.png" height="16" width="16" alt="edit button"/>
+          </button>
+
+          <button class="delete-task-btn">
+            <img src="images/delete.png" height="18" width="18" alt="delete"/>
+          </button>
+        </div>
+      </div>
+      <div class="flex-container">
+        <div class="description">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
+          dolore, dolorum magnam tratione debitis aliquam!
+        </div>
+
+        <div>
+          <select class="status">
+            <option selected="todo">todo</option>
+            <option value="doing">doing</option>
+            <option value="done">done</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <!-- end task repeat-->
+    <div class="add-button">
+      <button class="add-task">
+        <img src="images/add.png" alt="add button" height="70" width="70"/>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="add-task popup">
+  <div class="main">
+
+    <form>
+      <label class="name">Task name</label>
+      <input type="text" name="name" class="name">
+      <label class="description">Description</label>
+      <textarea name="description" class="description" rows="4"></textarea>
+    </form>
+
+    <div class="button-container">
+      <button class="success-button">Add</button>
+      <button class="secondary-button">Cancel</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="edit-task popup">
+  <div class="main">
+
+    <form>
+      <label class="name">Task name</label>
+      <input type="text" name="name" class="name">
+      <label class="description">Description</label>
+      <textarea name="description" class="description" rows="4"></textarea>
+    </form>
+
+    <div class="button-container">
+      <button class="success-button">Edit</button>
+      <button class="secondary-button">Cancel</button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- firebase
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDMAxyWCxAI-XfH_KbrOoLv5P_mvFimQSg",
+      authDomain: "g18-essen-final.firebaseapp.com",
+      projectId: "g18-essen-final",
+      storageBucket: "g18-essen-final.appspot.com",
+      messagingSenderId: "798773782854",
+      appId: "1:798773782854:web:23ca69b16910048fa9dd47"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+</script>
+-->
+<!-- main script -->
+<script type="module" src="script2.js"></script>
+</body>
+</html>
