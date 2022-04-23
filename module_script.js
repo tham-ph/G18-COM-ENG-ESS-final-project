@@ -54,10 +54,9 @@ async function showProjectGrid() {
     <div class="project-box" id="${proj.id}">
       <div class="btn-to-project">
         <h3 style="overflow-wrap: break-word;">${proj.name}</h3>
+        <div class="proj-des-box">
         <p>Description: ${proj.description}</p>
-        <br>
-        <br>
-        <br>
+        </div>
         <p id="${proj.id}-staus-text">Status: 0%</p>
         <div class="progress">
           <div class="progress-done" style="width:0%" id="${proj.id}-progress"></div>
@@ -138,7 +137,7 @@ async function showTaskGrid(project_id) {
 }
 
 async function updateProjectPercent(taskList, proj_id){
-  let all_task = taskList.length;
+  const all_task = taskList.length;
   if (all_task == 0) {return 0}
   var done_task = 0;
   const promises = await taskList.map(async(task) => {
@@ -149,15 +148,14 @@ async function updateProjectPercent(taskList, proj_id){
       }
   })
   await Promise.all(promises);
-  done_task = parseInt(100*done_task/ all_task);
-  // console.log(done_task);
   const bar = document.getElementById(proj_id+"-progress");
   const txt = document.getElementById(proj_id+"-staus-text");
+  const donePercent = parseInt(100*done_task/ all_task);
   if(bar){
-    bar.style.width = done_task + "%";
+    bar.style.width = donePercent + "%";
   }
   if(txt){
-    txt.innerText = "Status : " + done_task + '%' ;
+    txt.innerText = "Status : " + done_task + "/" + all_task + ' (' + donePercent + '%)' ;
   }
 }
 

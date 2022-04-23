@@ -127,6 +127,10 @@ img{
   color: white;
 }
 
+.proj-des-box{
+  min-height: 100px;
+}
+
 /* *******************Task Grid*********************** */
 .grid-task {
   display: grid;
