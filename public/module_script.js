@@ -49,6 +49,7 @@ const addTaskPopup = document.querySelector(".add-task.popup");
 const editTaskPopup = document.querySelector(".edit-task.popup");
 
 let projectId = null;
+let userId = "";
 
 async function showProjectGrid() {
   if (content_wrapper.classList.contains('grid-task')) {
