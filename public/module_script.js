@@ -58,7 +58,7 @@ async function showProjectGrid() {
     clearTaskItem();
     document.querySelectorAll('.proj-status')[0].style.display = "none";
     document.querySelectorAll('.add-button')[0].style.display = "none";
-    document.querySelectorAll('#add-project-wrapper')[0].style.display = "initial";
+    document.querySelectorAll('#add-project-wrapper')[0].style.display = "";
     
     second_wrapper.style.display = "grid";
     toggleProjectLabel(true);
@@ -82,8 +82,8 @@ async function showTaskGrid() {
   if (content_wrapper.classList.contains('grid-main')) {
     content_wrapper.className = 'grid-task';
     clearProjectItem()
-    document.querySelectorAll('.proj-status')[0].style.display = "initial";
-    document.querySelectorAll('.add-button')[0].style.display = "initial";
+    document.querySelectorAll('.proj-status')[0].style.display = "";
+    document.querySelectorAll('.add-button')[0].style.display = "";
     document.querySelectorAll('#add-project-wrapper')[0].style.display = "none";
     document.querySelectorAll('#second-wrapper')[0].style.display = "none";
     toggleProjectLabel(false);
@@ -104,6 +104,7 @@ async function showTaskGrid() {
     }
   });
   document.getElementById("proj-name-task").innerText = proj.data().name;
+  document.getElementById("proj-name-owner").innerText = "Creator : " + await userNamefromId(proj.data().owner);
   document.getElementById("proj-desc-task").innerText = "Description : " + proj.data().description;
   const proj_task_status_txt = document.getElementsByClassName("proj-task-status-txt")[0];
   const proj_task_status_bar = document.getElementsByClassName("proj-task-status-bar")[0];
@@ -113,6 +114,14 @@ async function showTaskGrid() {
   proj_task_status_bar.style.width = "0px";
 
   // console.log("taskgirdshow" + projectId);
+}
+
+async function userNamefromId(usrId){
+    const usrDoc = await getDoc(doc(db, `users/${usrId}`));
+    if(usrDoc.exists()){
+      return usrDoc.data().name;
+    }
+    return "";
 }
 
 async function updateProjectPercent(projectId) {
@@ -159,7 +168,7 @@ function initialShow() {
   document.querySelectorAll('.proj-status')[0].style.display = "none";
   document.querySelectorAll('.add-button')[0].style.display = "none";
   document.querySelectorAll('.containner')[0].style.display = "none";
-  document.querySelectorAll('#add-project-wrapper')[0].style.display = "initial";
+  document.querySelectorAll('#add-project-wrapper')[0].style.display = "";
   homeBtnEvent();
   userBtnEvent();
   showUserView();
@@ -260,7 +269,7 @@ function generalPopup(textDisplay, callBack, opt){
     generalPop.querySelector('.secondary-button').style.display = 'none';
     return;
   }
-  generalPop.querySelector('.secondary-button').style.display = 'initial';
+  generalPop.querySelector('.secondary-button').style.display = '';
 
   generalPop.querySelector('.secondary-button').addEventListener("click", () => {
     generalPop.style.display = "none";

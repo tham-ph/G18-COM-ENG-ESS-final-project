@@ -134,6 +134,7 @@ img {
 
 .main-content {
   flex-grow: 1;
+
 }
 
 /* *******************Project Grid*********************** */
@@ -208,6 +209,8 @@ img {
   height: 100px;
   padding: var(--padding);
   margin-bottom: 10px;
+  width: 100%;
+  height: auto;
 }
 
 /*  from project_box css */
@@ -271,7 +274,7 @@ img {
 }
 
 .edit-project-btn, .delete-project-btn {
-  background-color: rgb(250, 123, 145);
+  background-color: var(--btn-color);
   border-radius: 10px;
   align-self: center;
   font-size: 17px;
@@ -280,7 +283,7 @@ img {
   color: snow;
   border: 0px;
   cursor: pointer;
-
+  transition-duration: var(--animate-duration);
 }
 
 /* .project-edit-button{
@@ -337,7 +340,7 @@ img {
   width: 500px;
   gap: 16px;
   padding: 16px;
-  background-color: white;
+  background-color: var(--main-color);
   border-radius: 8px;
 }
 
