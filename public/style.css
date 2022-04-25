@@ -147,6 +147,11 @@ img {
   margin-bottom: 50px;
 }
 
+.proj-edit-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 15px;
+}
 /* .grid-proj-item {
   background: white;
 } */
@@ -543,6 +548,7 @@ h1 {
   .menu {
     width: 100%;
     margin-bottom: 50px;
+    position: relative;
   }
 
   .containner {

@@ -55,7 +55,7 @@ async function showProjectGrid() {
   document.querySelectorAll('.containner')[0].style.display = '';
   if (content_wrapper.classList.contains('grid-task')) {
     content_wrapper.className = 'grid-main';
-    clearTaskItem()
+    clearTaskItem();
     document.querySelectorAll('.proj-status')[0].style.display = "none";
     document.querySelectorAll('.add-button')[0].style.display = "none";
     document.querySelectorAll('#add-project-wrapper')[0].style.display = "initial";
@@ -63,7 +63,7 @@ async function showProjectGrid() {
     second_wrapper.style.display = "grid";
     toggleProjectLabel(true);
   } else {
-    clearProjectItem()
+    clearProjectItem();
   }
 
   const collection = await getDocs(query(projectsRef, orderBy("createdTime")));
@@ -231,7 +231,8 @@ manageAddTask();
 addUserButton.addEventListener("click", () => {
   const name = addUserPopup.querySelector("input.name").value;
   if (name.trim().length == 0){
-    return alert("user name can not be empty!")
+    generalPopup("username can not be empty!", null, false);
+    return 
   }
   addUserToFirebase(name);
   addUserToHTML(name);
@@ -240,9 +241,39 @@ addUserButton.addEventListener("click", () => {
   
 });
 
+function generalPopup(textDisplay, callBack, opt){
+
+  const generalPop = document.querySelector('.general.popup');
+  generalPop.style.display = "flex";
+  generalPop.querySelector('p').innerText = textDisplay;
+
+  let _listenner = function() {
+    if(callBack){
+      callBack();
+      }
+    generalPop.style.display = "none";
+  }
+
+  generalPop.querySelector('.success-button').addEventListener("click", _listenner);
+
+  if(!opt){
+    generalPop.querySelector('.secondary-button').style.display = 'none';
+    return;
+  }
+  generalPop.querySelector('.secondary-button').style.display = 'initial';
+
+  generalPop.querySelector('.secondary-button').addEventListener("click", () => {
+    generalPop.style.display = "none";
+    if(callBack){
+      generalPop.querySelector('.success-button').removeEventListener("click",_listenner);
+    }
+  });
+}
+
 function manageAddProject() {
+  let checker = true;
   // open add project popup
-  const addProjectButton = document.querySelector(".add-project-btn");
+  const addProjectButton = document.querySelector("#add-proj-click");
   addProjectButton.addEventListener("click", () => {
     addProjectPopup.style.display = "flex";
     addProjectPopup.querySelector("input.name").value = "";
@@ -253,8 +284,13 @@ function manageAddProject() {
   const confirmAddProjectButton = addProjectPopup.querySelector(".success-button");
   confirmAddProjectButton.addEventListener("click", async () => {
     const name = addProjectPopup.querySelector("input.name").value;
+    
     if (name.trim().length == 0){
-      return alert("project name can not be empty!");
+      checker = false;
+      generalPopup("Project name can not be empty!", null, false);
+      return ;
+    }else{
+      checker = true;
     }
     const description = addProjectPopup.querySelector("textarea.description").value;
     const taskList = [];
@@ -265,13 +301,14 @@ function manageAddProject() {
 //close add project popup
   addProjectPopup.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", () => {
+      if(!checker && button.className == 'success-button'){return}
       addProjectPopup.style.display = "none";
     })
   });
 
 }
 function manageEditProject(project, name, description, taskList, owner, id) {
-
+  let checker = false;
   let isEditProjectButtonClicked = false;
   let isDeleteProjectButtonClicked = false;
 
@@ -290,7 +327,11 @@ function manageEditProject(project, name, description, taskList, owner, id) {
   confirmEditProjectButton.addEventListener("click", () => {
     const editedName = editProjectPopup.querySelector("input.name").value;
     if (editedName.trim().length == 0){
-      return alert("project name can not be empty!");
+      generalPopup("Project name can not be empty!", null, false);
+      checker = false;
+      return; 
+    }else{
+      checker = true
     }
     const editedDescription = editProjectPopup.querySelector("textarea.description").value;
     const currentId = editProjectPopup.id;
@@ -302,6 +343,7 @@ function manageEditProject(project, name, description, taskList, owner, id) {
   const buttons = editProjectPopup.querySelectorAll("button");
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
+      if(!checker && button.className == 'success-button'){return}
       editProjectPopup.style.display = "none";
       isEditProjectButtonClicked = false;
     })
@@ -310,8 +352,12 @@ function manageEditProject(project, name, description, taskList, owner, id) {
   //delete project
   const deleteProjectButton = project.querySelector(".delete-project-btn");
   deleteProjectButton.addEventListener("click", () => {
-    deleteProjectInFirebase(id);
-    deleteProjectInHTML(id);
+    
+    generalPopup("Are you sure to delete this Project?", 
+    () =>{
+      deleteProjectInFirebase(id);
+      deleteProjectInHTML(id);
+    }, true);
     isDeleteProjectButtonClicked = true;
   });
 
@@ -340,7 +386,7 @@ async function addUserToFirebase(name) {
 }
 
 function addUserToHTML(name) {
-  document.querySelectorAll(".home-btn")[0].innerText = name;
+  document.querySelector(".user-btn").innerText = name;
 }
 
 async function addProjectToFirebase(name, description, taskList) {
@@ -370,20 +416,29 @@ function addProjectToHTML(name, description, taskList, owner, id) {
           <div class="progress-done" style="width:0%" id="${id}-progress"></div>
         </div>
         <br>
-        <button class="edit-project-btn">
-          edit
-        </button>
-        <button class="delete-project-btn">
-          delete
-        </button>
+        <div class="proj-edit-wrapper">
+          <button class="edit-project-btn">
+            edit
+          </button>
+          <button class="delete-project-btn">
+            delete
+          </button>
+        </div>
       </div>
     </div>`;
   
   if (owner === userId) {
     content_wrapper.insertBefore(proj_item, content_wrapper.children[0]);
   } else {
-    proj_item.querySelectorAll(".edit-project-btn")[0].style.display = 'none';
-    proj_item.querySelectorAll(".delete-project-btn")[0].style.display = 'none';
+    const proj_edit_wrapper = proj_item.querySelector(".proj-edit-wrapper");
+    proj_edit_wrapper.style = "grid-template-columns: 1fr; text-align:center;";
+    getDoc(doc(db, `users/${owner}`)).then( (user) => {
+      if(user.exists()){
+        proj_edit_wrapper.innerHTML = "Creator : " + user.data().name;
+        return;
+      }
+      proj_edit_wrapper.innerHTML = "system created"
+    });
     second_wrapper.insertBefore(proj_item, second_wrapper.children[0]);
   }
   projectId = id;
@@ -411,7 +466,8 @@ async function deleteProjectInFirebase(id) {
 }
 function deleteProjectInHTML(id) {
   const project = document.getElementById(id);
-  second_wrapper.removeChild(project.parentElement);
+  if(!project){return;}
+  content_wrapper.removeChild(project.parentElement);
 }
 
 //===============================================================
@@ -419,6 +475,7 @@ function deleteProjectInHTML(id) {
 
 
 function manageAddTask() {
+  let checker = true;
 // open add task popup
   const addTaskButton = document.querySelector(".add-task-btn");
   addTaskButton.addEventListener("click", () => {
@@ -432,7 +489,11 @@ function manageAddTask() {
   confirmAddTaskButton.addEventListener("click", async () => {
     const name = addTaskPopup.querySelector("input.name").value;
     if (name.trim().length == 0){
-      return alert("user name can not be empty!")
+      checker = false;
+      generalPopup("Task name can not be empty!", null, false);
+      return ;
+    }else{
+      checker = true;
     }
     const description = addTaskPopup.querySelector("textarea.description").value;
     const status = "todo";
@@ -445,12 +506,14 @@ function manageAddTask() {
 //close add project popup
   addTaskPopup.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", () => {
+      if(!checker && button.className == 'success-button'){return}
       addTaskPopup.style.display = "none";
     })
   });
 }
-function manageEditTask(task, name, description, status, taskId) {
 
+function manageEditTask(task, name, description, status, taskId) {
+  let checker = true;
   //open edit task popup
   const editTaskButton = task.querySelector(".edit-task-btn");
   editTaskButton.addEventListener("click", () => {
@@ -465,7 +528,11 @@ function manageEditTask(task, name, description, status, taskId) {
   confirmEditTaskButton.addEventListener("click", async () => {
     const editedName = editTaskPopup.querySelector("input.name").value;
     if (editedName.trim().length == 0){
-      return alert("user name can not be empty!")
+      generalPopup("Task name can not be empty!", null, false);
+      checker = false;
+      return; 
+    }else{
+      checker = true
     }
     const editedDescription = editTaskPopup.querySelector("textarea.description").value;
     const editedStatus = task.querySelector(".status").value;
@@ -478,6 +545,7 @@ function manageEditTask(task, name, description, status, taskId) {
   const buttons = editTaskPopup.querySelectorAll("button");
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
+      if(!checker && button.className == 'success-button'){return}
       editTaskPopup.style.display = "none";
     })
   });
@@ -485,10 +553,14 @@ function manageEditTask(task, name, description, status, taskId) {
   //delete project
   const deleteTaskButton = task.querySelector(".delete-task-btn");
   deleteTaskButton.addEventListener("click", async () => {
-    await deleteTaskInFirebase(taskId, projectId);
-    deleteTaskInHTML(taskId);
-    await deleteTaskFromProjectInFirebase(taskId, projectId);
-    await updateProjectPercent(projectId);
+    generalPopup("Are you sure to delete this Task?", 
+    async() =>{
+      await deleteTaskInFirebase(taskId, projectId);
+      deleteTaskInHTML(taskId);
+      await deleteTaskFromProjectInFirebase(taskId, projectId);
+      await updateProjectPercent(projectId);
+    }, true);
+    
   });
 
   //editing status
