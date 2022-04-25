@@ -3,7 +3,7 @@
     --main-color:pink;
     --btn-color:#FF5C8D;
     --second-color: #524A4E;
-    --background-color: #FFE6E6;
+    --background-color: #ffe9e9;
     --base-color:#c59bad;
     --font-color: white;
     --font-family: "Mitr", sans-serif;
@@ -261,19 +261,7 @@ img{
   cursor: pointer;
 
 }
-/* .project-edit-button{
-  margin-left: 80%;
-  margin-top: 2%;
-  height: 30px;
-  width: 30px;
-  border-radius: 10px;
-  padding: 1px;
-}
-.project-edit-img{
-  height: 80%;
-  width: 80%;
-  
-} */
+
 
 .edit-project-btn:hover, .delete-project-btn:hover {
   background-color: var(--second-color);
@@ -411,6 +399,16 @@ h1 {
 #status {
   font-size: var(--paragraph-font-size);
   font-family: "Mitr", "sans-serif";
+  width: 150px;
+  border-radius: 9px;
+  align-content: flex-end;
+  margin-top: 10px;
+  margin-right: 5%;
+}
+.status{
+  
+  font-size: var(--paragraph-font-size);
+  font-family: "sans-serif";
   width: 150px;
   border-radius: 9px;
   align-content: flex-end;

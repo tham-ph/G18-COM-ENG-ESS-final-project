@@ -3,7 +3,7 @@
     --main-color:pink;
     --btn-color:#FF5C8D;
     --second-color: #524A4E;
-    --background-color: #FFE6E6;
+    --background-color: #fff4f8;
     --base-color:#c59bad;
     --font-color: white;
     --font-family: "Mitr", sans-serif;
@@ -409,6 +409,15 @@ h1 {
   color: darkslategrey;
 }
 #status {
+  font-size: var(--paragraph-font-size);
+  font-family: "Mitr", "sans-serif";
+  width: 150px;
+  border-radius: 9px;
+  align-content: flex-end;
+  margin-top: 10px;
+  margin-right: 5%;
+}
+.status {
   font-size: var(--paragraph-font-size);
   font-family: "Mitr", "sans-serif";
   width: 150px;
