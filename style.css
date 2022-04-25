@@ -67,9 +67,11 @@ header{
   margin-bottom: 10px;
   margin-top: 10px;
   transition-duration: var(--animate-duration);
+  box-shadow: 2px 2px 2px var(--base-color);
 }
 .menu-btn:hover{
   background-color: var(--second-color);
+  box-shadow: 2px 2px 2px var(--second-color);
 }
 
 .btn-to-project{
