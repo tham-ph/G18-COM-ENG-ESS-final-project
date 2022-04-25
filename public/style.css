@@ -48,6 +48,9 @@ header {
   text-align: center;
   width: 80px;
   height: 100%;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
 }
 
 .home-btn {
