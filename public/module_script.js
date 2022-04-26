@@ -700,16 +700,16 @@ function updateTaskStatus(taskId, sta, is_parti){
           join_btn.style = "background:white";
           join_btn.scr = "images/blank.png";
           done_btn.checked = true;
-          done_img.src = "images/cross.png";
+          done_img.src = "images/sw_on.png";
         }else{
-          done_img.src = "images/cross.png";
+          done_img.src = "images/blank.png";
         }
         break;
     case "doing":
         if(is_parti){
           join_img.scr = "images/exit.png";
           join_btn.style = "background:red";
-          done_btn.src = "images/check_green.png";
+          done_btn.src = "images/sw_off.png";
           status_real.innerText = "Participating";
           status_real.style = "background:blue;";
         }else{
