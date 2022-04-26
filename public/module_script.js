@@ -608,10 +608,11 @@ function manageEditTask(task, name, description, status, taskId) {
   const join_btn = task.querySelector(".join-task-btn");
   join_btn.addEventListener('click', async() =>{
     const taskRef = await doc(db, "tasks", taskId);
-    const taskDoc = await getDoc(taskRef).data();
-    if (taskDoc.status == 'done'){return}
-    let usrs = taskDoc.userList;
-    let sta = taskDoc.status;
+    const taskDoc = await getDoc(taskRef);
+    const t_data = taskDoc.data();
+    if (t_data.status == 'done'){return}
+    let usrs = t_data.userList;
+    let sta = t_data.status;
     let is_parti = false
     if(usrs.indexOf(userId)>-1){
       usrs.splice(usrs.indexOf(userId), 1);
@@ -633,14 +634,15 @@ function manageEditTask(task, name, description, status, taskId) {
   const done_btn = task.querySelector(".mark-as-done");
   done_btn.addEventListener( 'click', async()=> {
     const taskRef = await doc(db, "tasks", taskId);
-    let taskDoc = await getDoc(taskRef).data();
-    if (taskDoc.status == 'todo'){return}
-    let usrs = taskDoc.userList;
-    let sta = taskDoc.status;
+    const taskDoc = await getDoc(taskRef);
+    const t_data = taskDoc.data();
+    if (t_data.status == 'todo'){return}
+    let usrs = t_data.userList;
+    let sta = t_data.status;
     if(usrs.indexOf(userId)<0){
       return;
     }
-    if(taskDoc.status == 'done'){
+    if(t_data.status == 'done'){
       sta = "doing"
     }else{
       sta = "done"
