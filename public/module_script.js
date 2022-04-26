@@ -100,7 +100,10 @@ async function showTaskGrid() {
     const taskDoc = await getDoc(taskRef);
     if (taskDoc.exists()) {
       const t = taskDoc.data();
-      addTaskToHTML(t.name, t.description, t.status, taskDoc.id);
+      await addTaskToHTML(t.name, t.description, t.status, taskDoc.id);
+      const taskdiv = document.getElementById(task);
+      console.log(t.userList);
+      updateTaskStatus(taskdiv, t.status, t.userList.indexOf(userId)>=0);
       updateTaskParticipant(taskDoc);
     }
   });
@@ -148,7 +151,7 @@ async function updateProjectPercent(projectId) {
     }
   });
   await Promise.all(promises);
-  console.log(participants);
+  // console.log(participants);
   const bar1 = document.getElementById(projectId+"-progress");
   const txt1 = document.getElementById(projectId+"-status-text");
   const bar2 = document.getElementById(projectId+"-t-progress");
@@ -411,8 +414,8 @@ function manageEditProject(project, name, description, taskList, owner, id) {
 async function addUserToFirebase(name) {
   const checkExistence = await getDocs(query(usersRef, where("name", "==", name)));
   if (checkExistence.size > 0) {
-    console.log(checkExistence);
-    console.log(checkExistence.docs[0].id);
+    // console.log(checkExistence);
+    // console.log(checkExistence.docs[0].id);
     userId = checkExistence.docs[0].id;
     return;
   }
@@ -576,7 +579,7 @@ function manageEditTask(task, name, description, status, taskId) {
     const editedDescription = editTaskPopup.querySelector("textarea.description").value;
     const editedStatus = task.querySelector(".status").value;
     const currentId = editTaskPopup.id;
-    editTaskInHTML(editedName, editedDescription, editedStatus, currentId);
+    editTaskInHTML(editedName, editedDescription, null, currentId);
     await editTaskInFirebase(editedName, editedDescription, editedStatus, currentId, projectId);
   });
 
@@ -599,22 +602,106 @@ function manageEditTask(task, name, description, status, taskId) {
       await deleteTaskFromProjectInFirebase(taskId, projectId);
       await updateProjectPercent(projectId);
     }, true);
-    
   });
-
+  
   //editing status
-  const statusSelectionButton = task.querySelector(".status");
-  statusSelectionButton.addEventListener("change", async () => {
-    const name = task.querySelector(".name").innerHTML;
-    const description = task.querySelector(".description").innerHTML;
-    const editedStatus = statusSelectionButton.value;
-    const id = taskId;
-    editTaskInHTML(name, description, editedStatus, taskId);
-    await editTaskInFirebase(name, description, editedStatus, taskId);
+  const join_btn = task.querySelector(".join-task-btn");
+  join_btn.addEventListener('click', async() =>{
+    const taskRef = await doc(db, "tasks", taskId);
+    const taskDoc = await getDoc(taskRef).data();
+    if (taskDoc.status == 'done'){return}
+    let usrs = taskDoc.userList;
+    let sta = taskDoc.status;
+    let is_parti = false
+    if(usrs.indexOf(userId)>-1){
+      usrs.splice(usrs.indexOf(userId), 1);
+      is_parti = false;
+    }else{
+      usrs.push(userId);
+      is_parti = true
+    }
+    if(usrs.length > 0){
+      sta = "doing"
+      
+    }else{
+      sta = "todo"
+    }
+    updateTaskStatus(task, sta, is_parti);
+    await updateDoc(taskRef, {userList:usrs, status:sta});
     await updateProjectPercent(projectId);
   });
-
+  const done_btn = task.querySelector(".mark-as-done");
+  done_btn.addEventListener( 'click', async()=> {
+    const taskRef = await doc(db, "tasks", taskId);
+    let taskDoc = await getDoc(taskRef).data();
+    if (taskDoc.status == 'todo'){return}
+    let usrs = taskDoc.userList;
+    let sta = taskDoc.status;
+    if(usrs.indexOf(userId)<0){
+      return;
+    }
+    if(taskDoc.status == 'done'){
+      sta = "doing"
+    }else{
+      sta = "done"
+    }updateTaskStatus(task, sta, true)
+    await updateDoc(taskRef, {status:sta});
+    await updateProjectPercent(projectId);
+  });
+  // const statusSelectionButton = task.querySelector(".status");
+  // statusSelectionButton.addEventListener("change", async () => {
+  //   const name = task.querySelector(".name").innerHTML;
+  //   const description = task.querySelector(".description").innerHTML;
+  //   const editedStatus = statusSelectionButton.value;
+  //   const id = taskId;
+  //   editTaskInHTML(name, description, editedStatus, taskId);
+  //   await editTaskInFirebase(name, description, editedStatus, taskId);
+  //   await updateProjectPercent(projectId);
+  // });
 }
+
+function updateTaskStatus(task, sta, is_parti){
+  const status_real = task.querySelector(".real-status-box");
+  const join_btn = task.querySelector(".join-task-btn");
+  const done_btn = task.querySelector(".mark-as-done");
+  switch (sta){
+    case "done":
+        status_real.innerText = "Task Done";
+        status_real.style = "background:green;";
+        if(is_parti){
+          join_btn.style.display = "";
+          done_btn.style.display = "";
+          join_btn.style = "background:red";
+          done_btn.src = "images/cross.png";
+        }else{
+          join_btn.style.display = "none";
+          done_btn.style.display = "none";
+        }
+        break;
+    case "doing":
+        join_btn.style.display = "";
+        if(is_parti){
+          done_btn.style.display = "";
+          join_btn.style = "background:red";
+          done_btn.src = "images/check_green.png";
+          status_real.innerText = "Participanting";
+          status_real.style = "background:blue;";
+        }else{
+          done_btn.style.display = "none";
+          join_btn.style = "background:green";
+          status_real.innerText = "Undertaking";
+          status_real.style = "background:pink;";
+        }
+        break;
+    default:
+      join_btn.style.display = "";
+      done_btn.style.display = "none";
+      join_btn.style = "background:green";
+      status_real.innerText = "Participanting";
+      status_real.style = "background:blue;";
+    }
+}
+
 
 async function addTaskToFirebase(name, description, status) {
   const newTask = await addDoc(tasksRef, {
@@ -682,21 +769,17 @@ async function addTaskToHTML(name, description, status, taskId) {
           <img src="images/delete.png" height="18" width="18" alt="delete" />
         </button>
       </div>`
-
       ;
   // console.log(t.name);
-  t_item.querySelector(".status").value = status;
+  // t_item.querySelector(".status").value = status;
   t_item.addEventListener('click', () =>{
     t_item.querySelectorAll(".according-task").forEach( (acc) =>{
       acc.classList.toggle("acc-hide");
     })
   })
   content_wrapper.insertBefore(t_item, content_wrapper.children[1]);
-
   await updateProjectPercent(projectId);
-
   manageEditTask(t_item, name, description, status, taskId, projectId);
-
 }
 
 async function editTaskInFirebase(name, description, status, id) {
@@ -706,11 +789,12 @@ async function editTaskInFirebase(name, description, status, id) {
     status,
   });
 }
+// here
 function editTaskInHTML(name, descripton, status, id) {
   const task = document.getElementById(id);
   task.querySelector(".name").innerHTML = name;
   task.querySelector(".description").innerHTML = descripton;
-  task.querySelector(".status").value = status
+  // task.querySelector(".status").value = status
 }
 
 async function deleteTaskInFirebase(id) {

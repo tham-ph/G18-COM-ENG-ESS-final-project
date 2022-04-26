@@ -231,14 +231,29 @@ img {
 .join-task-btn , .mark-as-done{
   width: 60px;
   margin: auto;
-  
+  border: none;
+  cursor: pointer;
+}
+
+.join-task-btn , .mark-as-done, .real-status-box{
+  box-shadow: 3px 3px 2px var(--base-color);
 }
 
 .mark-as-done{
   border-radius: 100%;
-  border: none;
   background-color: var(--background-color);
 }
+
+.join-task-btn{
+  background-color: var(--btn-color);
+  border-radius: 5px;
+}
+
+.point{
+  cursor: pointer;
+}
+/* join-task-btn real-status-box mark-as-done */
+
 
 /* .task-name-box {
   background: white;
@@ -481,7 +496,7 @@ h1 {
   padding-left: 5px;
   padding-right: 5px;
   width: 80%;
-
+  box-shadow: 3px 3px 2px var(--base-color);
   text-align: left;
   /* position: relative; */
 }
