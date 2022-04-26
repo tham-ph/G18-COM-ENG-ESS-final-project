@@ -101,10 +101,9 @@ async function showTaskGrid() {
     if (taskDoc.exists()) {
       const t = taskDoc.data();
       await addTaskToHTML(t.name, t.description, t.status, taskDoc.id);
-      const taskdiv = document.getElementById(task);
-      console.log(t.userList);
-      updateTaskStatus(taskdiv, t.status, t.userList.indexOf(userId)>=0);
-      updateTaskParticipant(taskDoc);
+      // console.log(t.userList);
+      updateTaskStatus(task, t.status, t.userList.indexOf(userId)>=0);
+      updateTaskParticipant(task);
     }
   });
   document.getElementById("proj-name-task").innerText = proj.data().name;
@@ -179,13 +178,16 @@ async function updateProjectPercent(projectId) {
   }
 }
 
-async function updateTaskParticipant(taskDoc){
+async function updateTaskParticipant(taskId){
+    const holder = document.getElementById(`${taskId}-task-parti`);
+    holder.innerHTML = "";
+    const taskDoc = await getDoc(doc(db, "tasks", taskId));
     if (taskDoc.exists()) {
       taskDoc.data().userList.map( async(usr) => {
         const usrName = await userNamefromId(usr);
-        const holder = document.getElementById(`${taskDoc.id}-task-parti`);
         let pdiv = document.createElement('div');
-        pdiv.style = "background:#ff6f00;";
+        pdiv.className = "participant";
+        pdiv.style = "background: #ef4374;";
         pdiv.innerText = usrName;
         holder.appendChild(pdiv);
       });
@@ -280,6 +282,22 @@ addUserButton.addEventListener("click", async() => {
   showProjectGrid();
   addUserPopup.style.display = "none";
   
+});
+
+//
+addUserButton.addEventListener('keydown', (event) => {
+  if (event.key === "Enter"){
+    event.preventDefault();
+    const name = addUserPopup.querySelector("input.name").value;
+    if (name.trim().length == 0){
+      generalPopup("username can not be empty!", null, false);
+      return 
+    }
+    addUserToFirebase(name);
+    addUserToHTML(name);
+    showProjectGrid();
+    addUserPopup.style.display = "none";
+  }
 });
 
 function generalPopup(textDisplay, callBack, opt){
@@ -627,9 +645,11 @@ function manageEditTask(task, name, description, status, taskId) {
     }else{
       sta = "todo"
     }
-    updateTaskStatus(task, sta, is_parti);
+    
+    updateTaskStatus(taskId, sta, is_parti);
     await updateDoc(taskRef, {userList:usrs, status:sta});
-    await updateProjectPercent(projectId);
+    updateProjectPercent(projectId);
+    updateTaskParticipant(taskId);
   });
   const done_btn = task.querySelector(".mark-as-done");
   done_btn.addEventListener( 'click', async()=> {
@@ -646,9 +666,11 @@ function manageEditTask(task, name, description, status, taskId) {
       sta = "doing"
     }else{
       sta = "done"
-    }updateTaskStatus(task, sta, true)
+    }
+    updateTaskStatus(taskId, sta, true)
     await updateDoc(taskRef, {status:sta});
-    await updateProjectPercent(projectId);
+    updateProjectPercent(projectId);
+    updateTaskParticipant(taskId);
   });
   // const statusSelectionButton = task.querySelector(".status");
   // statusSelectionButton.addEventListener("change", async () => {
@@ -662,46 +684,62 @@ function manageEditTask(task, name, description, status, taskId) {
   // });
 }
 
-function updateTaskStatus(task, sta, is_parti){
+function updateTaskStatus(taskId, sta, is_parti){
+  const task = document.getElementById(taskId);
   const status_real = task.querySelector(".real-status-box");
   const join_btn = task.querySelector(".join-task-btn");
+  const join_img = join_btn.querySelector('.img-ratio-cover');
   const done_btn = task.querySelector(".mark-as-done");
+  const done_img = done_btn.querySelector('.img-ratio-cover');
   switch (sta){
     case "done":
         status_real.innerText = "Task Done";
         status_real.style = "background:green;";
         if(is_parti){
-          join_btn.style.display = "";
-          done_btn.style.display = "";
-          join_btn.style = "background:red";
-          done_btn.src = "images/cross.png";
+          
+          // join_btn.style.display = "";
+          // done_btn.style.display = "";
+          join_btn.style = "background:white";
+          join_btn.scr = "images/blank.png";
+          done_btn.checked = true;
+          done_img.src = "images/cross.png";
         }else{
-          join_btn.style.display = "none";
-          done_btn.style.display = "none";
+          // join_btn.style.display = "none";
+          // done_btn.style.display = "none";
+          join_btn.scr = "images/blank.png";
+          done_img.src = "images/cross.png";
         }
         break;
     case "doing":
-        join_btn.style.display = "";
+        // join_btn.style.display = "";
+          
         if(is_parti){
-          done_btn.style.display = "";
+          // done_btn.style.display = "";
           join_btn.style = "background:red";
-          done_btn.src = "images/check_green.png";
-          status_real.innerText = "Participanting";
+          done_img.src = "images/check_green.png";
+          status_real.innerText = "Participating";
           status_real.style = "background:blue;";
+          join_img.scr = "images/exit.png";
         }else{
-          done_btn.style.display = "none";
+          // done_btn.style.display = "none";
+          join_img.src = "images/hand.png";
+          done_img.src = "images/blank.png";
           join_btn.style = "background:green";
           status_real.innerText = "Undertaking";
-          status_real.style = "background:pink;";
+          status_real.style = "background:orange;";
         }
         break;
-    default:
-      join_btn.style.display = "";
-      done_btn.style.display = "none";
-      join_btn.style = "background:green";
-      status_real.innerText = "Participanting";
-      status_real.style = "background:blue;";
+    case "todo":
+       // join_btn.style.display = "";
+      // done_btn.style.display = "none";
+      done_img.src = "images/blank.png";
+      join_img.src = "images/hand.png";
+      join_btn.style = "background:white";
+      status_real.innerText = "TO-DO";
+      status_real.style = "background:rgb(189, 80, 115)";
+      break;
     }
+    
 }
 
 
@@ -716,6 +754,7 @@ async function addTaskToFirebase(name, description, status) {
   return newTask.id;
 }
 async function addTaskToHTML(name, description, status, taskId) {
+
   let t_item = document.createElement('div');
   t_item.className = 'grid-task-item drop-shadow';
   t_item.id = taskId;
@@ -726,7 +765,9 @@ async function addTaskToHTML(name, description, status, taskId) {
       <div class="task-status-box" style="display:grid; align-items:center">
         <div style="display:grid; grid-template-columns: 1fr 1fr 1fr;">
           <button class="join-task-btn">
+          <div>
             <div class="ratio-box-img">
+            
             <img
               class="img-ratio-cover"
               src="images/hand.png"
@@ -741,15 +782,11 @@ async function addTaskToHTML(name, description, status, taskId) {
             <div class="ratio-box-img">
             <img
               class="img-ratio-cover"
+              src="images/blank.png"
               alt="add button"
             />
             </div>
           </button>
-          <select class="status" style="display:none">
-            <option selected="todo">todo</option>
-            <option value="doing">doing</option>
-            <option value="done">done</option>
-          </select>
         </div>
       </div>
       <div class="accord-sep"></div>
@@ -760,7 +797,7 @@ async function addTaskToHTML(name, description, status, taskId) {
           ${description}
         </p>
       </div>
-      <div class="task-parti according-task acc-hide" id="${taskId}-task-parti">
+      <div class="task-parti-holder according-task acc-hide" id="${taskId}-task-parti">
       </div>
       <div class="task-menu-box according-task acc-hide">
         <button class="edit-task-btn">
@@ -773,9 +810,12 @@ async function addTaskToHTML(name, description, status, taskId) {
       ;
   // console.log(t.name);
   // t_item.querySelector(".status").value = status;
-  t_item.addEventListener('click', () =>{
+  t_item.querySelector(".task-name-box").addEventListener('click', () =>{
     t_item.querySelectorAll(".according-task").forEach( (acc) =>{
       acc.classList.toggle("acc-hide");
+      if(acc.classList.contains("task-parti-holder")){
+        acc.classList.toggle("task-parti");
+      }
     })
   })
   content_wrapper.insertBefore(t_item, content_wrapper.children[1]);

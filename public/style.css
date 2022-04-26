@@ -94,6 +94,7 @@ img {
 .img-ratio-cover {
   width: 100%;
   height: 100%;
+  
   object-fit: cover;
   position: absolute;
   top: 0;
@@ -219,20 +220,22 @@ img {
 }
 
 .real-status-box{
-  background-color: blue;
+  background-color: rgb(189, 80, 115);
   border-radius: 5px;
   text-align: center;
   display: grid;
   align-items: center;
   padding: 10px;
   font-weight: bold;
-  color: white;
+  
+  color: rgb(255, 255, 255);
 }
 .join-task-btn , .mark-as-done{
   width: 60px;
   margin: auto;
   border: none;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .join-task-btn , .mark-as-done, .real-status-box{
@@ -247,6 +250,10 @@ img {
 .join-task-btn{
   background-color: var(--btn-color);
   border-radius: 5px;
+}
+
+.join-task-btn:hover {
+  background: red;
 }
 
 .point{
@@ -405,6 +412,7 @@ img {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  font-family: "Mitr", "sans-serif";
   width: 500px;
   gap: 16px;
   padding: 16px;
@@ -413,10 +421,14 @@ img {
 }
 
 .popup form {
+  font-family: "Mitr", "sans-serif";
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: 100%;
+}
+button.success-button {
+  font-family: "Mitr", "sans-serif";
 }
 
 .popup label,
@@ -454,6 +466,7 @@ textarea {
   color: white;
   font-size: 24px;
   background-color: gray;
+  font-family: "Mitr";
 }
 
 .popup .secondary-button:hover {
@@ -583,6 +596,88 @@ h1 {
   text-align: center;
 }
 
+.task-parti {
+  display: flex;
+  gap:8px;
+}
+.participant {
+  text-align: center;
+  align-self: flex-start;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+
+  position: absolute;
+  margin-left: 2px;
+  margin-top: 3px;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  ;
+}
+
+.slider:before {
+  margin-top: 1px;
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(45px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+  width: 80px;
+}
+
+.slider.round:before {
+  
+  border-radius: 50%;
+}
+
+
 /* *******************Media Query*********************** */
 @media (max-width: 1080px) {
   .grid-main {
@@ -686,3 +781,4 @@ h1 {
     grid-column: 1/3;
   }
 }
+
