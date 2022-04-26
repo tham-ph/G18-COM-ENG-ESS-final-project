@@ -108,10 +108,13 @@ async function showTaskGrid() {
   document.getElementById("proj-desc-task").innerText = "Description : " + proj.data().description;
   const proj_task_status_txt = document.getElementsByClassName("proj-task-status-txt")[0];
   const proj_task_status_bar = document.getElementsByClassName("proj-task-status-bar")[0];
+  const proj_participants = document.getElementsByClassName("proj-participants")[0];
   proj_task_status_txt.id = projectId + "-t-status-text";
   proj_task_status_bar.id = projectId + "-t-progress";
   proj_task_status_txt.innerText = "Status : 0%"
   proj_task_status_bar.style.width = "0px";
+  proj_participants.id = projectId + "-t-participants";
+  proj_participants.innerText = "Participants : 0 people";
 
   // console.log("taskgirdshow" + projectId);
 }
@@ -128,6 +131,7 @@ async function updateProjectPercent(projectId) {
   const project = await getDoc(doc(db, "projects", projectId));
   const taskList = project.data().taskList;
   const all_task = taskList.length;
+  let participants = [];
   if (all_task == 0) {
     return 0
   }
@@ -135,15 +139,21 @@ async function updateProjectPercent(projectId) {
   const promises = await taskList.map(async (task) => {
     const taskRef = doc(db, `tasks/${task}`);
     const taskDoc = await getDoc(taskRef);
-    if (taskDoc.exists() && taskDoc.data().status == "done") {
-      done_task += 1;
+    if (taskDoc.exists()){
+      if(taskDoc.data().status == "done"){
+        done_task += 1;
+      }
+      participants = participants.concat(taskDoc.data().userList.filter((item) => participants.indexOf(item) < 0));
     }
-  })
+  });
   await Promise.all(promises);
+  console.log(participants);
   const bar1 = document.getElementById(projectId+"-progress");
   const txt1 = document.getElementById(projectId+"-status-text");
-  const bar2 = document.getElementById(projectId+"-t" + "-progress");
-  const txt2 = document.getElementById(projectId+"-t" + "-status-text");
+  const bar2 = document.getElementById(projectId+"-t-progress");
+  const txt2 = document.getElementById(projectId+"-t-status-text");
+  const par1 = document.getElementById(projectId+"-participants");
+  const par2 = document.getElementById(projectId+"-t-participants");
   const donePercent = parseInt(100 * done_task / all_task);
   if (bar1) {
     bar1.style.width = donePercent + "%";
@@ -156,6 +166,12 @@ async function updateProjectPercent(projectId) {
   }
   if (txt2) {
     txt2.innerText = "Status : " + done_task + "/" + all_task + ' (' + donePercent + '%)';
+  }
+  if (par1) {
+    par1.innerText = "Participants : " + participants.length +" people";
+  }
+  if (par2) {
+    par2.innerText = "Participants : " + participants.length +" people";
   }
 }
 
@@ -420,6 +436,7 @@ function addProjectToHTML(name, description, taskList, owner, id) {
         <div class="proj-des-box">
         <p class="description">Description : ${description}</p>
         </div>
+        <p id="${id}-participants">Participants: 0 people</p>
         <p id="${id}-status-text">Status: 0%</p>
         <div class="progress">
           <div class="progress-done" style="width:0%" id="${id}-progress"></div>
@@ -603,7 +620,7 @@ async function addTaskToHTML(name, description, status, taskId) {
   t_item.innerHTML = `
       <div class="task-name-box">
         <div class="taskheader"><p class="name">${name}</p></div>
-        <p class="description" style="font-wei: normal">
+        <p class="description task-description">
           ${description}
         </p>
       </div>
