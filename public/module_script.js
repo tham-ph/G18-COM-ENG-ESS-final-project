@@ -102,7 +102,7 @@ async function showTaskGrid() {
       const t = taskDoc.data();
       await addTaskToHTML(t.name, t.description, t.status, taskDoc.id);
       // console.log(t.userList);
-      updateTaskStatus(task, t.status, t.userList.indexOf(userId)>=0);
+      updateTaskStatus(task, t.status, Boolean(t.userList.indexOf(userId)>-1));
       updateTaskParticipant(task);
     }
   });
@@ -281,7 +281,6 @@ addUserButton.addEventListener("click", async() => {
   addUserToHTML(name);
   showProjectGrid();
   addUserPopup.style.display = "none";
-  
 });
 
 //
@@ -691,38 +690,30 @@ function updateTaskStatus(taskId, sta, is_parti){
   const join_img = join_btn.querySelector('.img-ratio-cover');
   const done_btn = task.querySelector(".mark-as-done");
   const done_img = done_btn.querySelector('.img-ratio-cover');
+  console.log(is_parti);
   switch (sta){
     case "done":
         status_real.innerText = "Task Done";
         status_real.style = "background:green;";
+        join_img.scr = "images/blank.png";
         if(is_parti){
-          
-          // join_btn.style.display = "";
-          // done_btn.style.display = "";
           join_btn.style = "background:white";
           join_btn.scr = "images/blank.png";
           done_btn.checked = true;
           done_img.src = "images/cross.png";
         }else{
-          // join_btn.style.display = "none";
-          // done_btn.style.display = "none";
-          join_btn.scr = "images/blank.png";
           done_img.src = "images/cross.png";
         }
         break;
     case "doing":
-        // join_btn.style.display = "";
-          
         if(is_parti){
-          // done_btn.style.display = "";
+          join_img.scr = "images/exit.png";
           join_btn.style = "background:red";
           done_btn.src = "images/check_green.png";
           status_real.innerText = "Participating";
           status_real.style = "background:blue;";
-          join_img.scr = "images/exit.png";
         }else{
-          // done_btn.style.display = "none";
-          join_img.src = "images/hand.png";
+          // join_img.src = "images/hand.png";
           done_img.src = "images/blank.png";
           join_btn.style = "background:green";
           status_real.innerText = "Undertaking";
@@ -730,24 +721,21 @@ function updateTaskStatus(taskId, sta, is_parti){
         }
         break;
     case "todo":
-       // join_btn.style.display = "";
-      // done_btn.style.display = "none";
       done_img.src = "images/blank.png";
-      join_img.src = "images/hand.png";
+      // join_img.src = "images/hand.png";
       join_btn.style = "background:white";
       status_real.innerText = "TO-DO";
       status_real.style = "background:rgb(189, 80, 115)";
       break;
     default:
-      // join_btn.style.display = "";
-      done_btn.style.display = "none";
-      join_btn.style = "background:green";
-      status_real.innerText = "Participating";
-      status_real.style = "background:blue;";
+      done_img.src = "images/blank.png";
+      // join_img.src = "images/hand.png";
+      join_btn.style = "background:white";
+      status_real.innerText = "TO-DO";
+      status_real.style = "background:rgb(189, 80, 115)";
     }
     
 }
-
 
 async function addTaskToFirebase(name, description, status) {
   const newTask = await addDoc(tasksRef, {
@@ -776,7 +764,7 @@ async function addTaskToHTML(name, description, status, taskId) {
             
             <img
               class="img-ratio-cover"
-              src="images/hand.png"
+              src="images/blank.png"
               alt="add button"
             />
             </div>
