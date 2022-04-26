@@ -716,7 +716,7 @@ function updateTaskStatus(taskId, sta, is_parti){
         if(is_parti){
           // done_btn.style.display = "";
           join_btn.style = "background:red";
-          done_img.src = "images/check_green.png";
+          done_btn.src = "images/check_green.png";
           status_real.innerText = "Participating";
           status_real.style = "background:blue;";
           join_img.scr = "images/exit.png";
@@ -738,6 +738,12 @@ function updateTaskStatus(taskId, sta, is_parti){
       status_real.innerText = "TO-DO";
       status_real.style = "background:rgb(189, 80, 115)";
       break;
+    default:
+      // join_btn.style.display = "";
+      done_btn.style.display = "none";
+      join_btn.style = "background:green";
+      status_real.innerText = "Participating";
+      status_real.style = "background:blue;";
     }
     
 }
