@@ -686,7 +686,7 @@ function updateTaskStatus(task, sta, is_parti){
           done_btn.style.display = "";
           join_btn.style = "background:red";
           done_btn.src = "images/check_green.png";
-          status_real.innerText = "Participanting";
+          status_real.innerText = "Participating";
           status_real.style = "background:blue;";
         }else{
           done_btn.style.display = "none";
@@ -699,7 +699,7 @@ function updateTaskStatus(task, sta, is_parti){
       join_btn.style.display = "";
       done_btn.style.display = "none";
       join_btn.style = "background:green";
-      status_real.innerText = "Participanting";
+      status_real.innerText = "Participating";
       status_real.style = "background:blue;";
     }
 }
