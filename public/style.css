@@ -276,9 +276,22 @@ img {
 /*  task menu status and botton */
 
 .hover-cross-icon {
-  margin: 0px;
+  background-color: var(--background-color);
+  transition-duration: var(--animate-duration);
+}
+.hover-cross-icon:hover{
+  content: url("images/cross.png");
+  background-color: var(--base-color);
 }
 
+.hover-exit-icon {
+  background-color: green;
+  transition-duration: var(--animate-duration);
+}
+.hover-exit-icon:hover{
+  content: url("images/exit.png");
+  background-color: red;
+}
 
 
 /*  from project_box css */

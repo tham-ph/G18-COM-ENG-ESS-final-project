@@ -467,7 +467,7 @@ function addProjectToHTML(name, description, taskList, owner, id) {
       <div class="btn-to-project">
         <h3 class="name" style="overflow-wrap: break-word;">${name}</h3>
         <div class="proj-des-box">
-        <p class="description">Description : ${description}</p>
+        <p class="description"><strong>Description : </strong> ${description}</p>
         </div>
         <p id="${id}-participants">Participants: 0 people</p>
         <p id="${id}-status-text">Status: 0%</p>
@@ -690,42 +690,56 @@ function updateTaskStatus(taskId, sta, is_parti){
   const join_img = join_btn.querySelector('.img-ratio-cover');
   const done_btn = task.querySelector(".mark-as-done");
   const done_img = done_btn.querySelector('.img-ratio-cover');
-  console.log(is_parti);
+
   join_img.src = "images/blank.png";
   done_img.src = "images/blank.png";
+  join_img.classList.remove("hover-exit-icon");
+  done_img.classList.remove("hover-cross-icon");
+  join_btn.classList.remove("point");
+  done_btn.classList.remove("point");
+  join_btn.firstElementChild.classList.remove("acc-hide");
+  done_btn.firstElementChild.classList.remove("acc-hide");
+
+
   switch (sta){
     case "done":
+        join_btn.firstElementChild.classList.add("acc-hide");
         status_real.innerText = "Task Done";
         status_real.style = "background:green;";
         if(is_parti){
           join_btn.style = "background:white";
-          done_img.src = "images/cross.png";
+          done_img.src = "images/check_green.png";
+          done_img.classList.add("hover-cross-icon");
+          done_btn.classList.add("point");
         }else{
           done_img.src = "images/check_green.png";
         }
         break;
     case "doing":
+        join_btn.classList.add("point");
         if(is_parti){
-          join_img.src = "images/exit.png";
-          join_btn.style = "background:red";
-          done_btn.src = "images/check_green.png";
+          join_img.src = "images/hand.png";
+          join_btn.style = "background:green";
           status_real.innerText = "Participating";
           status_real.style = "background:blue;";
+          join_img.classList.add("hover-exit-icon");
+          done_btn.classList.add("point");
         }else{
           join_img.src = "images/hand.png";
-          done_img.src = "images/check_green.png";
-          join_btn.style = "background:green";
+          join_btn.style = "background:var(--background-color)";
           status_real.innerText = "Undertaking";
           status_real.style = "background:orange;";
+          done_btn.firstElementChild.classList.add("acc-hide");
         }
         break;
     default:
+      done_btn.firstElementChild.classList.add("acc-hide");
       join_img.src = "images/hand.png";
-      join_btn.style = "background:white";
+      join_btn.classList.add('point');
+      join_btn.style = "background:var(--background-color)";
       status_real.innerText = "TO-DO";
       status_real.style = "background:rgb(189, 80, 115)";
     }
-    
 }
 
 async function addTaskToFirebase(name, description, status) {
