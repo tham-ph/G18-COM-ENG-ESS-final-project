@@ -741,7 +741,6 @@ async function addTaskToHTML(name, description, status, taskId) {
             <div class="ratio-box-img">
             <img
               class="img-ratio-cover"
-              src="images/check_green.png"
               alt="add button"
             />
             </div>
