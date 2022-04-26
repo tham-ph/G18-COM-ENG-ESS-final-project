@@ -253,13 +253,13 @@ manageAddTask();
 //===================================================
 
 
-addUserButton.addEventListener("click", () => {
+addUserButton.addEventListener("click", async() => {
   const name = addUserPopup.querySelector("input.name").value;
   if (name.trim().length == 0){
     generalPopup("username can not be empty!", null, false);
     return 
   }
-  addUserToFirebase(name);
+  await addUserToFirebase(name);
   addUserToHTML(name);
   showProjectGrid();
   addUserPopup.style.display = "none";
