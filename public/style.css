@@ -196,6 +196,26 @@ img {
   padding-right: 10px;
 }
 
+.task-parti {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column: 2/4;
+  justify-items: end;
+}
+
+.accord-sep{
+  grid-column: 1/4;
+  height: 2px;
+  background: var(--background-color);
+}
+
+.acc-hide{
+  display: none;
+}
+
+.task-des{
+  grid-column: 1/2;
+}
 /* .task-name-box {
   background: white;
 }
@@ -608,5 +628,16 @@ h1 {
     margin-top: 0px;
     height: 50px;
     width: 100%;
+  }
+
+  .task-parti {
+    align-self: flex-start;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column: 1/4;
+    justify-items: end;
+  }
+  .task-des{
+    grid-column: 1/4;
   }
 }

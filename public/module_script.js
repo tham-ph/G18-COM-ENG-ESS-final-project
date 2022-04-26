@@ -101,6 +101,7 @@ async function showTaskGrid() {
     if (taskDoc.exists()) {
       const t = taskDoc.data();
       addTaskToHTML(t.name, t.description, t.status, taskDoc.id);
+      updateTaskParticipant(taskDoc);
     }
   });
   document.getElementById("proj-name-task").innerText = proj.data().name;
@@ -175,6 +176,17 @@ async function updateProjectPercent(projectId) {
   }
 }
 
+async function updateTaskParticipant(taskDoc){
+    if (taskDoc.exists()) {
+      taskDoc.data().userList.map( async(usr) => {
+        const usrName = await userNamefromId(usr);
+        const holder = document.getElementById(`${taskDoc.id}-task-parti`);
+        let pdiv = document.createElement('div');
+        pdiv.innerText = usrName;
+        holder.appendChild(pdiv);
+      });
+    }
+}
 
 function initialShow() {
   const content_wrapper = document.getElementById('content-wrapper');
@@ -620,9 +632,6 @@ async function addTaskToHTML(name, description, status, taskId) {
   t_item.innerHTML = `
       <div class="task-name-box">
         <div class="taskheader"><p class="name">${name}</p></div>
-        <p class="description task-description">
-          ${description}
-        </p>
       </div>
       <div class="task-status-box">
         <div>
@@ -640,10 +649,26 @@ async function addTaskToHTML(name, description, status, taskId) {
         <button class="delete-task-btn">
           <img src="images/delete.png" height="18" width="18" alt="delete" />
         </button>
-      </div>`;
+      </div>
+      <div class="accord-sep according-task acc-hide"></div>
+      <div class="according-task acc-hide">Description :</div>
+      <div class="according-task acc-hide">Participants :</div>
+      <div style="display:; height:100px;" class="task-des according-task acc-hide">
+        <p class="description task-description">
+          ${description}
+        </p>
+      </div>
+      <div class="task-parti according-task acc-hide" id="${taskId}-task-parti">
+      </div>`
+
+      ;
   // console.log(t.name);
   t_item.querySelector(".status").value = status;
-
+  t_item.addEventListener('click', () =>{
+    t_item.querySelectorAll(".according-task").forEach( (acc) =>{
+      acc.classList.toggle("acc-hide");
+    })
+  })
   content_wrapper.insertBefore(t_item, content_wrapper.children[1]);
 
   await updateProjectPercent(projectId);
