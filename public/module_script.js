@@ -182,6 +182,7 @@ async function updateTaskParticipant(taskDoc){
         const usrName = await userNamefromId(usr);
         const holder = document.getElementById(`${taskDoc.id}-task-parti`);
         let pdiv = document.createElement('div');
+        pdiv.style = "background:#ff6f00;";
         pdiv.innerText = usrName;
         holder.appendChild(pdiv);
       });
