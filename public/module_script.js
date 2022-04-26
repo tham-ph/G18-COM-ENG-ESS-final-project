@@ -640,7 +640,7 @@ async function addTaskToHTML(name, description, status, taskId) {
             <div class="ratio-box-img">
             <img
               class="img-ratio-cover"
-              src="images/add.png"
+              src="images/hand.png"
               alt="add button"
             />
             </div>
@@ -652,7 +652,7 @@ async function addTaskToHTML(name, description, status, taskId) {
             <div class="ratio-box-img">
             <img
               class="img-ratio-cover"
-              src="images/edit.png"
+              src="images/check_green.png"
               alt="add button"
             />
             </div>

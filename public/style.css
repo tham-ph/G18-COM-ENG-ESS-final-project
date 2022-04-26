@@ -231,8 +231,14 @@ img {
 .join-task-btn , .mark-as-done{
   width: 60px;
   margin: auto;
+  
 }
 
+.mark-as-done{
+  border-radius: 100%;
+  border: none;
+  background-color: var(--background-color);
+}
 
 /* .task-name-box {
   background: white;
