@@ -634,32 +634,53 @@ async function addTaskToHTML(name, description, status, taskId) {
       <div class="task-name-box">
         <div class="taskheader"><p class="name">${name}</p></div>
       </div>
-      <div class="task-status-box">
-        <div>
-          <select class="status">
+      <div class="task-status-box" style="display:grid; align-items:center">
+        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr;">
+          <button class="join-task-btn">
+            <div class="ratio-box-img">
+            <img
+              class="img-ratio-cover"
+              src="images/add.png"
+              alt="add button"
+            />
+            </div>
+          </button>
+          <div class="real-status-box">
+            TO-DO
+          </div>
+          <button class="mark-as-done">
+            <div class="ratio-box-img">
+            <img
+              class="img-ratio-cover"
+              src="images/edit.png"
+              alt="add button"
+            />
+            </div>
+          </button>
+          <select class="status" style="display:none">
             <option selected="todo">todo</option>
             <option value="doing">doing</option>
             <option value="done">done</option>
           </select>
         </div>
       </div>
-      <div class="task-menu-box">
+      <div class="accord-sep"></div>
+      <div class="task-des-acc according-task acc-hide">Description :</div>
+      <div class="task-part-acc according-task acc-hide">Participants :</div>
+      <div class="task-des according-task acc-hide">
+        <p class="description task-description">
+          ${description}
+        </p>
+      </div>
+      <div class="task-parti according-task acc-hide" id="${taskId}-task-parti">
+      </div>
+      <div class="task-menu-box according-task acc-hide">
         <button class="edit-task-btn">
           <img src="images/edit.png" height="16" width="16" alt="edit button" />
         </button>
         <button class="delete-task-btn">
           <img src="images/delete.png" height="18" width="18" alt="delete" />
         </button>
-      </div>
-      <div class="accord-sep according-task acc-hide"></div>
-      <div class="according-task acc-hide">Description :</div>
-      <div class="according-task acc-hide">Participants :</div>
-      <div style="display:; height:100px;" class="task-des according-task acc-hide">
-        <p class="description task-description">
-          ${description}
-        </p>
-      </div>
-      <div class="task-parti according-task acc-hide" id="${taskId}-task-parti">
       </div>`
 
       ;
