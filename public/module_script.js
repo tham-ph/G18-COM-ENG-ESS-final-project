@@ -108,7 +108,13 @@ async function showTaskGrid() {
   });
   document.getElementById("proj-name-task").innerText = proj.data().name;
   document.getElementById("proj-name-owner").innerText = "Creator : " + await userNamefromId(proj.data().owner);
-  document.getElementById("proj-desc-task").innerText = "Description : " + proj.data().description;
+  const pd2 = document.getElementById("proj-desc-task");
+  pd2.innerText = "";
+  const sta2 = document.createElement("strong");
+  sta2.innerText = "Description : "; 
+  pd2.appendChild(sta2);
+  const data2 = document. createTextNode(proj.data().description);
+  pd2.appendChild(data2);
   const proj_task_status_txt = document.getElementsByClassName("proj-task-status-txt")[0];
   const proj_task_status_bar = document.getElementsByClassName("proj-task-status-bar")[0];
   const proj_participants = document.getElementsByClassName("proj-participants")[0];
