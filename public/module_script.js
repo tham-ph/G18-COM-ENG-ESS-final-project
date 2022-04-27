@@ -1,20 +1,39 @@
+// // Import the functions you need from the SDKs you need
+// import {initializeApp} from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+// // TODO: Add SDKs for Firebase products that you want to use
+// // https://firebase.google.com/docs/web/setup#available-libraries
+//
+// // Your web app's Firebase configuration
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDMAxyWCxAI-XfH_KbrOoLv5P_mvFimQSg",
+//   authDomain: "g18-essen-final.firebaseapp.com",
+//   projectId: "g18-essen-final",
+//   storageBucket: "g18-essen-final.appspot.com",
+//   messagingSenderId: "798773782854",
+//   appId: "1:798773782854:web:23ca69b16910048fa9dd47"
+// };
+//
+// // Initialize Firebase
+// const app = initializeApp(firebaseConfig);
+
 // Import the functions you need from the SDKs you need
-import {initializeApp} from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDMAxyWCxAI-XfH_KbrOoLv5P_mvFimQSg",
-  authDomain: "g18-essen-final.firebaseapp.com",
-  projectId: "g18-essen-final",
-  storageBucket: "g18-essen-final.appspot.com",
-  messagingSenderId: "798773782854",
-  appId: "1:798773782854:web:23ca69b16910048fa9dd47"
+  apiKey: "AIzaSyAJ6qyMWxe6aZfjkKlYz3ESbB10SlkMrEQ",
+  authDomain: "eng-ess-g18.firebaseapp.com",
+  projectId: "eng-ess-g18",
+  storageBucket: "eng-ess-g18.appspot.com",
+  messagingSenderId: "27548291904",
+  appId: "1:27548291904:web:e97b3f584ae9370fdca0a5"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
 import {
   addDoc,
   collection,
