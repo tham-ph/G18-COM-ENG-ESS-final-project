@@ -510,7 +510,7 @@ function addProjectToHTML(name, description, taskList, owner, id) {
     const pd1 = proj_item.querySelector(".description");
     pd1.innerText = "";
     const sta1 = document.createElement("strong");
-    sta1.innerText = "Description : ";
+    sta1.innerText = "Description : "; 
     pd1.appendChild(sta1);
     const data1 = document. createTextNode(description);
     pd1.appendChild(data1);
