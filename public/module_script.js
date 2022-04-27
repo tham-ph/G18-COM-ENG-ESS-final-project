@@ -61,7 +61,7 @@ async function showProjectGrid() {
     document.querySelectorAll('.proj-status')[0].style.display = "none";
     document.querySelectorAll('.add-button')[0].style.display = "none";
     document.querySelectorAll('#add-project-wrapper')[0].style.display = "";
-    
+
     second_wrapper.style.display = "grid";
     toggleProjectLabel(true);
   } else {
@@ -113,7 +113,7 @@ async function showTaskGrid() {
   const pd2 = document.getElementById("proj-desc-task");
   pd2.innerText = "";
   const sta2 = document.createElement("strong");
-  sta2.innerText = "Description : "; 
+  sta2.innerText = "Description : ";
   pd2.appendChild(sta2);
   const data2 = document. createTextNode(proj.data().description);
   pd2.appendChild(data2);
@@ -318,7 +318,7 @@ addUserButton.addEventListener("click", async() => {
   const name = addUserPopup.querySelector("input.name").value;
   if (name.trim().length == 0){
     generalPopup("username can not be empty!", null, false);
-    return 
+    return
   }
   await addUserToFirebase(name);
   addUserToHTML(name);
@@ -334,7 +334,7 @@ addUserButton.addEventListener('keydown', (event) => {
     const name = addUserPopup.querySelector("input.name").value;
     if (name.trim().length == 0){
       generalPopup("username can not be empty!", null, false);
-      return 
+      return
     }
     addUserToFirebase(name);
     addUserToHTML(name);
@@ -386,7 +386,7 @@ function manageAddProject() {
   const confirmAddProjectButton = addProjectPopup.querySelector(".success-button");
   confirmAddProjectButton.addEventListener("click", async () => {
     const name = addProjectPopup.querySelector("input.name").value;
-    
+
     if (name.trim().length == 0){
       checker = false;
       generalPopup("Project name can not be empty!", null, false);
@@ -431,7 +431,7 @@ function manageEditProject(project, name, description, taskList, owner, id) {
     if (editedName.trim().length == 0){
       generalPopup("Project name can not be empty!", null, false);
       checker = false;
-      return; 
+      return;
     }else{
       checker = true
     }
@@ -454,8 +454,8 @@ function manageEditProject(project, name, description, taskList, owner, id) {
   //delete project
   const deleteProjectButton = project.querySelector(".delete-project-btn");
   deleteProjectButton.addEventListener("click", () => {
-    
-    generalPopup("Are you sure to delete this Project?", 
+
+    generalPopup("Are you sure to delete this Project?",
     () =>{
       deleteProjectInFirebase(id);
       deleteProjectInHTML(id);
@@ -531,12 +531,12 @@ function addProjectToHTML(name, description, taskList, owner, id) {
         </div>
       </div>
     </div>`;
-  
+
     proj_item.querySelector(".name").innerText = name;
     const pd1 = proj_item.querySelector(".description");
     pd1.innerText = "";
     const sta1 = document.createElement("strong");
-    sta1.innerText = "Description : "; 
+    sta1.innerText = "Description : ";
     pd1.appendChild(sta1);
     const data1 = document. createTextNode(description);
     pd1.appendChild(data1);
@@ -644,7 +644,7 @@ function manageEditTask(task, name, description, status, taskId) {
     if (editedName.trim().length == 0){
       generalPopup("Task name can not be empty!", null, false);
       checker = false;
-      return; 
+      return;
     }else{
       checker = true
     }
@@ -667,7 +667,7 @@ function manageEditTask(task, name, description, status, taskId) {
   //delete project
   const deleteTaskButton = task.querySelector(".delete-task-btn");
   deleteTaskButton.addEventListener("click", async () => {
-    generalPopup("Are you sure to delete this Task?", 
+    generalPopup("Are you sure to delete this Task?",
     async() =>{
       await deleteTaskInFirebase(taskId, projectId);
       deleteTaskInHTML(taskId);
@@ -675,7 +675,7 @@ function manageEditTask(task, name, description, status, taskId) {
       await updateProjectPercent(projectId);
     }, true);
   });
-  
+
   //editing status
   const join_btn = task.querySelector(".join-task-btn");
   join_btn.addEventListener('click', async() =>{
@@ -695,11 +695,11 @@ function manageEditTask(task, name, description, status, taskId) {
     }
     if(usrs.length > 0){
       sta = "doing"
-      
+
     }else{
       sta = "todo"
     }
-    
+
     updateTaskStatus(taskId, sta, is_parti);
     await updateDoc(taskRef, {userList:usrs, status:sta});
     updateProjectPercent(projectId);
@@ -778,6 +778,7 @@ function updateTaskStatus(taskId, sta, is_parti){
           status_real.style = "background:blue;";
           join_img.classList.add("hover-exit-icon");
           done_btn.classList.add("point");
+          done_img.src = "images/check_green.png";
         }else{
           join_img.src = "images/hand.png";
           join_btn.style = "background:var(--background-color)";
@@ -787,7 +788,7 @@ function updateTaskStatus(taskId, sta, is_parti){
         }
         break;
     case "todo":
-          
+
           done_btn.firstElementChild.classList.add("acc-hide");
           join_img.src = "images/hand.png";
           join_btn.classList.add('point');
@@ -828,11 +829,11 @@ async function addTaskToHTML(name, description, status, taskId) {
         <div style="display:grid; grid-template-columns: 1fr 1fr 1fr;">
           <button class="join-task-btn">
           <div>
-            <div class="ratio-box-img">
+            <div class="ratio-box-img" style="background:white">
             
             <img
               class="img-ratio-cover"
-              src="images/blank.png"
+              src="images/hand.png"
               alt="add button"
             />
             </div>
