@@ -51,6 +51,7 @@ const editTaskPopup = document.querySelector(".edit-task.popup");
 let projectId = null;
 let userId = "";
 let lastUserId = sessionStorage.getItem('lastId');
+let localLastName  = localStorage.getItem('lastId');
 
 async function showProjectGrid() {
   document.querySelectorAll('.containner')[0].style.display = '';
@@ -281,6 +282,10 @@ function userBtnEvent() {
 
 function showUserView(){
   addUserPopup.style.display = "flex";
+  if(localLastName){
+    addUserPopup.querySelector("input.name").value = localLastName;
+  }
+
 }
 
 function toggleProjectLabel(isShow) {
@@ -317,6 +322,7 @@ addUserButton.addEventListener("click", async() => {
   }
   await addUserToFirebase(name);
   addUserToHTML(name);
+  localStorage.setItem("lastId",name);
   showProjectGrid();
   addUserPopup.style.display = "none";
 });
@@ -608,6 +614,7 @@ function manageAddTask() {
     await addTaskToHTML(name, description, status, taskId, projectId);
     await addTaskToProjectInFireBase(taskId, projectId);
     updateProjectPercent(projectId);
+    updateTaskStatus(taskId, status, false);
   });
 
 //close add project popup
@@ -748,7 +755,6 @@ function updateTaskStatus(taskId, sta, is_parti){
   join_btn.firstElementChild.classList.remove("acc-hide");
   done_btn.firstElementChild.classList.remove("acc-hide");
 
-
   switch (sta){
     case "done":
         join_btn.firstElementChild.classList.add("acc-hide");
@@ -780,6 +786,15 @@ function updateTaskStatus(taskId, sta, is_parti){
           done_btn.firstElementChild.classList.add("acc-hide");
         }
         break;
+    case "todo":
+          
+          done_btn.firstElementChild.classList.add("acc-hide");
+          join_img.src = "images/hand.png";
+          join_btn.classList.add('point');
+          join_btn.style = "background:var(--background-color)";
+          status_real.innerText = "TO-DO";
+          status_real.style = "background:rgb(189, 80, 115)";
+          break;
     default:
       done_btn.firstElementChild.classList.add("acc-hide");
       join_img.src = "images/hand.png";
