@@ -271,7 +271,7 @@ img {
 }
 .task-description{
   font-weight: normal;
-  padding: 10px;
+  /* padding: 10px; */
 }
 /*  task menu status and botton */
 
@@ -517,9 +517,10 @@ h1 {
   border-radius: 5px;
   padding-left: 5px;
   padding-right: 5px;
-  width: 80%;
+  width: 95%;
   box-shadow: 3px 3px 2px var(--base-color);
   text-align: left;
+  margin-bottom: 5px;
   /* position: relative; */
 }
 
@@ -615,6 +616,13 @@ h1 {
   padding: 8px;
   border-radius: 8px;
 }
+
+p {
+  /* overflow-wrap: break-word; */
+  overflow: hidden;
+}
+
+
 
 /* *******************Media Query*********************** */
 @media (max-width: 1080px) {
@@ -721,6 +729,10 @@ h1 {
 
   .popup .main {
     min-width: 200px;
+  }
+  .taskheader{
+    width: 95%;
+    margin-bottom: 20px;
   }
 }
 

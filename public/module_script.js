@@ -162,19 +162,39 @@ async function updateProjectPercent(projectId) {
     bar1.style.width = donePercent + "%";
   }
   if (txt1) {
-    txt1.innerText = "Status : " + done_task + "/" + all_task + ' (' + donePercent + '%)';
+    txt1.innerText = "";
+    const sta = document.createElement("strong");
+    sta.innerText = "Status : ";
+    txt1.appendChild(sta);
+    const data = document. createTextNode(done_task + "/" + all_task + ' (' + donePercent + '%)');
+    txt1.appendChild(data);
   }
   if (bar2) {
     bar2.style.width = donePercent + "%";
   }
   if (txt2) {
-    txt2.innerText = "Status : " + done_task + "/" + all_task + ' (' + donePercent + '%)';
+    txt2.innerText = "";
+    const sta = document.createElement("strong");
+    sta.innerText = "Status : ";
+    txt2.appendChild(sta);
+    const data = document. createTextNode(done_task + "/" + all_task + ' (' + donePercent + '%)');
+    txt2.appendChild(data);
   }
   if (par1) {
-    par1.innerText = "Participants : " + participants.length +" people";
+    par1.innerText = "";
+    const sta = document.createElement("strong");
+    sta.innerText = "Participants : ";
+    par1.appendChild(sta);
+    const data = document. createTextNode(participants.length +" people");
+    par1.appendChild(data);
   }
   if (par2) {
-    par2.innerText = "Participants : " + participants.length +" people";
+    par2.innerText = "";
+    const sta = document.createElement("strong");
+    sta.innerText = "Participants : ";
+    par2.appendChild(sta);
+    const data = document. createTextNode(participants.length +" people");
+    par2.appendChild(data);
   }
 }
 
@@ -465,12 +485,12 @@ function addProjectToHTML(name, description, taskList, owner, id) {
   proj_item.innerHTML = `
     <div class="project-box drop-shadow" id="${id}">
       <div class="btn-to-project">
-        <h3 class="name" style="overflow-wrap: break-word;">${name}</h3>
+        <h3 class="name" style="overflow-wrap: break-word;"></h3>
         <div class="proj-des-box">
-        <p class="description"><strong>Description : </strong> ${description}</p>
+        <p class="description"><strong>Description : </strong></p>
         </div>
-        <p id="${id}-participants">Participants: 0 people</p>
-        <p id="${id}-status-text">Status: 0%</p>
+        <p id="${id}-participants"><strong>Participants :</strong> 0 people</p>
+        <p id="${id}-status-text"><strong>Status :</strong> 0%</p>
         <div class="progress">
           <div class="progress-done" style="width:0%" id="${id}-progress"></div>
         </div>
@@ -486,6 +506,14 @@ function addProjectToHTML(name, description, taskList, owner, id) {
       </div>
     </div>`;
   
+    proj_item.querySelector(".name").innerText = name;
+    const pd1 = proj_item.querySelector(".description");
+    pd1.innerText = "";
+    const sta1 = document.createElement("strong");
+    sta1.innerText = "Description : ";
+    pd1.appendChild(sta1);
+    const data1 = document. createTextNode(description);
+    pd1.appendChild(data1);
   if (owner === userId) {
     content_wrapper.insertBefore(proj_item, content_wrapper.children[0]);
   } else {
@@ -759,7 +787,7 @@ async function addTaskToHTML(name, description, status, taskId) {
   t_item.id = taskId;
   t_item.innerHTML = `
       <div class="task-name-box point">
-        <div class="taskheader"><p class="name">${name}</p></div>
+        <div class="taskheader"><p class="name"></p></div>
       </div>
       <div class="task-status-box" style="display:grid; align-items:center">
         <div style="display:grid; grid-template-columns: 1fr 1fr 1fr;">
@@ -793,7 +821,6 @@ async function addTaskToHTML(name, description, status, taskId) {
       <div class="task-part-acc according-task acc-hide">Participants :</div>
       <div class="task-des according-task acc-hide">
         <p class="description task-description">
-          ${description}
         </p>
       </div>
       <div class="task-parti-holder according-task acc-hide" id="${taskId}-task-parti">
@@ -809,6 +836,8 @@ async function addTaskToHTML(name, description, status, taskId) {
       ;
   // console.log(t.name);
   // t_item.querySelector(".status").value = status;
+  t_item.querySelector(".task-description").innerText = description;
+  t_item.querySelector(".name").innerText = name;
   t_item.querySelector(".task-name-box").addEventListener('click', () =>{
     t_item.querySelectorAll(".according-task").forEach( (acc) =>{
       acc.classList.toggle("acc-hide");
