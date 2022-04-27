@@ -342,6 +342,7 @@ addUserButton.addEventListener("click", async() => {
   await addUserToFirebase(name);
   addUserToHTML(name);
   localStorage.setItem("lastId",name);
+  localLastName = name;
   showProjectGrid();
   addUserPopup.style.display = "none";
 });
