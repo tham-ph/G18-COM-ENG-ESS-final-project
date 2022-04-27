@@ -50,6 +50,7 @@ const editTaskPopup = document.querySelector(".edit-task.popup");
 
 let projectId = null;
 let userId = "";
+let lastUserId = sessionStorage.getItem('lastId');
 
 async function showProjectGrid() {
   document.querySelectorAll('.containner')[0].style.display = '';
@@ -231,7 +232,18 @@ function initialShow() {
   document.querySelectorAll('#add-project-wrapper')[0].style.display = "";
   homeBtnEvent();
   userBtnEvent();
+
+  if (lastUserId){
+    userId = lastUserId;
+    showProjectGrid();
+    renameUser();
+  }else{
   showUserView();
+  }
+}
+async function renameUser(){
+  const name = await userNamefromId(userId);
+  addUserToHTML(name);
 }
 
 
@@ -460,6 +472,7 @@ async function addUserToFirebase(name) {
     // console.log(checkExistence);
     // console.log(checkExistence.docs[0].id);
     userId = checkExistence.docs[0].id;
+    sessionStorage.setItem('lastId', checkExistence.docs[0].id);
     return;
   }
   const newUser = await addDoc(usersRef, {
@@ -467,6 +480,7 @@ async function addUserToFirebase(name) {
     createdTime: serverTimestamp(),
   });
   userId = newUser.id;
+  sessionStorage.setItem('lastId', checkExistence.docs[0].id);
 }
 
 function addUserToHTML(name) {
